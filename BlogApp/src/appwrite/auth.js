@@ -1,6 +1,6 @@
 //Lets build an authentication service for our App:-
 
-import config from '../config/config'
+import config from '../config/config';
 import {Client,Account,ID} from "appwrite";
 
 //Lets create a class:-
@@ -10,15 +10,18 @@ client = new Client();
 account;
 //Whenever the new object made ,a new constructor method to call itself.
 constructor(){
-this.client
-.setEndpoint(config.appwriteUrl)
-.setEndpoint(config.appwriteProjectId);
+    this.client
+    .setEndpoint(config.appwriteUrl)
+    .setProject(config.appwriteProjectId);
+
 this.account = new Account();
 }
 
 //Lets make an account:-
 //For Signup (createAccount:-
 //Because of promise return , we are here using async await
+//using try...catch blocks is a good practice, 
+//especially when dealing with asynchronous operations like network requests or interactions with external services, as they can potentially throw errors.
 async createAccount({email, password, name}) {
     try {
         const userAccount = await this.account.create(ID.unique(), email, password, name);
