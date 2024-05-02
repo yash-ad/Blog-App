@@ -2,8 +2,8 @@ import { useState,useEffect } from "react"
 import {useDispatch} from 'react-redux'
 import authService from './appwrite/auth'
 import { login,logout } from "./store/authSlice";
-import Header from './components/index'
-import Footer from './components/index'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
 import {Outlet} from 'react-router-dom'
 
 function App() {
@@ -41,11 +41,11 @@ dispatch(logout())
  //Conditional rendering using ternary operator:-
  //If loading is not true that means its false then show this or other wise then show this:-
  return !loading ?(
-  <div className="min-h-screen flex flex-wrap content-between bg-gray-400">Test
+  <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
   <div className="w-full block" >
 <Header/>
 <main>
-  <Outlet/>
+  Todo:<Outlet/>
 </main>
 <Footer/>
   </div>
