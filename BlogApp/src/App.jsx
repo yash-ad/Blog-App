@@ -7,15 +7,15 @@ import Footer from './components/Footer/Footer'
 import {Outlet} from 'react-router-dom'
 
 function App() {
-
-//Lets create a loading state ofr handling the network requests, because it takes time for the newtwork request
+//1.Lets create a loading state before handling the network requests, because it takes time for the network request because we are fetching  to the server
 //Until then we should handle the network request.
 const [loading,setLoading] = useState(true);
 
 //It dispatches an action and calls to the reducer function.
 const dispatch = useDispatch();
 
-//So whenever the application loads or run , should ask to the user if user is available or not
+//So whenever the application loads or run , 
+//should ask to the user if user is available or not.
 //Using 'useEffect' Hook:-
 
 useEffect(()=>{
@@ -23,7 +23,7 @@ useEffect(()=>{
 authService.getCurrentUser()
 //If successfully Data is fetched then store the data into the 'userData' its a variable  in the '.then()'
 .then((userData)=>{
-//Lets check for a condition  , is there  'userData' that means the currentUser is then show the data
+//Lets check for a condition  , is there  'userData' available that means the currentUser is then show the data
 if(userData){
   dispatch(login({userData}))
 }
