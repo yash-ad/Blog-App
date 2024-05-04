@@ -1,5 +1,4 @@
 
-
 //Accept properties(props) as a parameters:-
 function Button({
     //Also known as 'children' in a programming.
