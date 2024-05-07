@@ -23,6 +23,7 @@ function SignupForm() {
 // And here we are using async/await because we are exchanging an information from an outer source:-
 
 const createSignup = async(data)=>{
+    setError("");
 try {
       //From authService there is a Signup (createAccount) method:-
         //Response will come into a 'session' and it takes time because its from an outer source:-
