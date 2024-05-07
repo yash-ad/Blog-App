@@ -22,7 +22,7 @@ export default function LoginForm() {
 
     //'Login' method here we are using for login the form:-
     // And here we are using async/await because we are exchanging an information from an outer source:-
-    const login =  async(data)=>{
+    const createLogin =  async(data)=>{
         console.log(`login data:${data}`);
         // Before moving on to the login, its best practice to Empty out an errors:-
         setError("");
@@ -75,7 +75,7 @@ error && <p className="text-red-600 mt-8 text-center">{error}</p>
             }
         {/* //onSubmit attribute which is an event handler and over here handling the event or method we could say handleSubmit() which comes from 'useForm' hook:-
            // And passing the 'login' overhere which is the method we  have  created  */}
-            <form onSubmit={handleSubmit(login)} className='mt-8'>
+            <form onSubmit={handleSubmit(createLogin)} className='mt-8'>
             <div className='space-y-5'>
 {/* Including <Input/> component */}
 <Input
