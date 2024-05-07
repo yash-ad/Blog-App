@@ -3,8 +3,8 @@ import {Link, useNavigate} from 'react-router-dom'
 import{login as storeLogin} from '../store/authSlice'
 import {Button,Input,Logo} from './index'
 import { useDispatch } from "react-redux"
-import {useform} from "react-hook-form"
 import authService from '../appwrite/auth'
+import {useForm} from "react-hook-form"
 
 export default function LoginForm() {
 
@@ -15,7 +15,7 @@ export default function LoginForm() {
     const dispatch = useDispatch();
 
     // register and handleSubmit these are methods/events which comes from 'useForm' hook.
-    const { register, handleSubmit } = useForm();
+    const {register, handleSubmit} = useForm();
   
     //State is for displaying an errors:-
     const [error,setError] = useState('');
