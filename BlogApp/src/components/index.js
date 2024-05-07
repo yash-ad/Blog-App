@@ -3,6 +3,7 @@ import Footer from "./Footer/Footer";
 import Container from './Container/Container'
 import Logo from    './Logo';
 import LogoutBtn from './Header/LogoutBtn'
+import Postcard from './PostCard'
 
 
 export {
@@ -10,5 +11,6 @@ export {
     Footer,
     Container,
     Logo,
-    LogoutBtn
+    LogoutBtn,
+    Postcard
 };
