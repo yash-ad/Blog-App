@@ -4,8 +4,8 @@ import config from '../config/config';
 import { Client, Databases, ID,Storage,Query } from "appwrite";
 
 
-//Lets create a class called 'DatabaseService':-
-export class DatabaseService{
+//Lets create a class called 'AppWriteService':-
+export class AppWriteService{
 //Make a new property 
 client = new Client();
 databases;
@@ -151,5 +151,5 @@ getFilePreview(fileId){
 }
 
 
-const databaseService = new DatabaseService();
-export default databaseService;
+const appWriteService = new AppWriteService();
+export default appWriteService;

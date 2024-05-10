@@ -3,7 +3,11 @@ import Footer from "./Footer/Footer";
 import Container from './Container/Container'
 import Logo from    './Logo';
 import LogoutBtn from './Header/LogoutBtn'
-import Postcard from './PostCard'
+import Postcard from './PostCard';
+import Select from './Select';
+import RealTimeEditor from "./RealTimeEditor";
+import Input from './Input';
+import Button from './Button'
 
 
 export {
@@ -12,5 +16,9 @@ export {
     Container,
     Logo,
     LogoutBtn,
-    Postcard
+    Postcard,
+    Select,
+    RealTimeEditor,
+    Button,
+    Input
 };
