@@ -4,7 +4,7 @@ import {Button,Input,Select,RealTimeEditor} from '../index'
 import {useSelector} from 'react-redux';
 import appWriteService from '../../appwrite/conf.js';
 import { useForm } from "react-hook-form";
-import { AppwriteException } from "appwrite";
+
 
 
 
