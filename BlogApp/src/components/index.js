@@ -8,6 +8,9 @@ import Select from './Select';
 import RealTimeEditor from "./RealTimeEditor";
 import Input from './Input';
 import Button from './Button'
+import Signup from '../pages/Signup';
+import PostForm from './Post-form/PostForm.jsx';
+import PostCard from "./PostCard";
 
 
 export {
@@ -20,5 +23,8 @@ export {
     Select,
     RealTimeEditor,
     Button,
-    Input
+    Input,
+    Signup,
+    PostForm,
+PostCard
 };

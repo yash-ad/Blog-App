@@ -102,7 +102,7 @@ async getPosts(queries = [Query.equal("status", "active")]){
 
         )
     } catch (error) {
-        console.log("Appwrite serive :: getPosts :: error", error);
+        console.log("Appwrite service :: getPosts :: error", error);
         return false
     }
 }
