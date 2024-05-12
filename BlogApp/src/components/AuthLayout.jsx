@@ -24,6 +24,8 @@ function AuthLayout({children,
       // And the current state of an authStatus is false
       // so overhere true && false !== true -> so true && true
       // the condition is true then navigate login to the user
+
+      //false && false !== false   //false && true = false
 if(authentication && authStatus !== authentication){
 navigate('/login')
 }
@@ -33,7 +35,8 @@ navigate('/login')
 // false && true !== true
 //false && false
 //The condition would be false overhere
-//
+
+
 else if(!authentication && authStatus !== authentication){
 navigate('/');
 }
