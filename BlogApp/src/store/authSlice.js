@@ -1,34 +1,31 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-
+// Initial state of the auth slice
 const initialState = {
-    //user is not authenticated
-    status:false,
-    // No user data
-    userData:null
-}
+    status: false, // User authentication status
+    userData: null // User data
+};
 
-
+// Create the authSlice using createSlice
 const authSlice = createSlice({
-    //Slice name
-    name:'auth',
-    //Slice initialState
-    initialState,
-    //Slice reducers or actions
-    reducers:{
-        //Individual functions to access from components:-
-        //And we know that every reducer has an access of state and action
-login:(state,action)=>{
-state.status = true;
-state.userData = action.payload;
-},
-logout:(state)=>{
-state.status = false;
-state.userData = null;
-}
+    name: 'auth', // Slice name
+    initialState, // Initial state
+    reducers: {
+        // Reducer to handle user login
+        login: (state, action) => {
+            state.status = true; // Update authentication status to true
+            state.userData = action.payload; // Update user data
+        },
+        // Reducer to handle user logout
+        logout: (state) => {
+            state.status = false; // Update authentication status to false
+            state.userData = null; // Clear user data
+        }
     }
-})
+});
 
+// Export actions from authSlice
+export const { login, logout } = authSlice.actions;
 
-export const {login,logout} = authSlice.actions;
+// Export the reducer function
 export default authSlice.reducer;

@@ -1,11 +1,11 @@
-import { SignupForm as SignupFormComponent } from "../components"
+import { SignupForm as SignupFormComponent } from "../components";
 
 function SignUp() {
-  return (
-    <div className='py-8'>
-<SignupFormComponent/>
-    </div>
-  )
+    return (
+        <div className='py-8'>
+            <SignupFormComponent />
+        </div>
+    );
 }
 
-export default SignUp
+export default SignUp;

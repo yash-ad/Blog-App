@@ -1,35 +1,33 @@
-
-//We need an action or reducer from the slice for logout button.
-import { logout } from '../../store/authSlice'
-//Also we need an authentication of logout from appwrite:-
-import authService from '../../appwrite/auth'
-import {useDispatch} from 'react-redux'
-
-
+import { logout } from '../../store/authSlice';
+import authService from '../../appwrite/auth';
+import { useDispatch } from 'react-redux';
 
 function Logout() {
-//It dispatches an action calls to the reducer function.
+    // Dispatch function to trigger the logout action
     const dispatch = useDispatch();
 
-//For logout button,Why not lets make an eventHandler callBack function
-const LogoutHandler = ()=>{
-    //authService is from appWrite so in the authService there is a logOut method and its a promise basically
-    //So we know that how to resolve or reject a promise gracefully,Using '.then() and .catch()' method:-
-    authService.logout()
-    .then(()=>{
-        dispatch(logout())
-    })
-    .catch((error)=>{
-     console.error(error);   
-    })
-}
-  return (
-    <button
-     className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
-     onClick={LogoutHandler}
-     >Logout
-     </button>
-  )
+    // Event handler function for logout button click
+    const logoutHandler = () => {
+        // Call the logout method from authService (returns a Promise)
+        authService.logout()
+            .then(() => {
+                // If logout is successful, dispatch logout action to update Redux store
+                dispatch(logout());
+            })
+            .catch((error) => {
+                // If logout fails, log the error to the console
+                console.error(error);
+            });
+    };
+
+    return (
+        <button
+            className='inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+            onClick={logoutHandler}
+        >
+            Logout
+        </button>
+    );
 }
 
-export default Logout
+export default Logout;

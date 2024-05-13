@@ -1,56 +1,52 @@
-import { useState,useEffect } from "react"
-import {useDispatch} from 'react-redux'
-import authService from './appwrite/auth'
-import { login,logout } from "./store/authSlice";
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
-import {Outlet} from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import authService from './appwrite/auth';
+import { login, logout } from "./store/authSlice";
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import { Outlet } from 'react-router-dom';
 
 function App() {
-//1.Lets create a loading state before handling the network requests, because it takes time for the network request because we are fetching  to the server
-//Until then we should handle the network request.
-const [loading,setLoading] = useState(true);
+  // State to manage loading status before handling network requests
+  const [loading, setLoading] = useState(true);
 
-//It dispatches an action and calls to the reducer function.
-const dispatch = useDispatch();
+  // Dispatch function to trigger actions to update Redux store
+  const dispatch = useDispatch();
 
-//So whenever the application loads or run , 
-//should ask to the user if user is available or not.
-//Using 'useEffect' Hook:-
+  // useEffect hook to fetch current user data from AuthService when the component mounts
+  useEffect(() => {
+    // Fetch current user data from AuthService
+    authService.getCurrentUser()
+      .then((userData) => {
+        // If userData is available (user is logged in), dispatch login action to update Redux store
+        if (userData) {
+          dispatch(login({ userData }));
+        } else {
+          // If userData is not available (user is not logged in), dispatch logout action to update Redux store
+          dispatch(logout());
+        }
+      })
+      // Set loading to false after fetching current user data, whether successful or not
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
-useEffect(()=>{
-//authService and its currentUser from appWrite there is method called 'getCurrentUser()':-
-authService.getCurrentUser()
-//If successfully Data is fetched then store the data into the 'userData' its a variable  in the '.then()'
-.then((userData)=>{
-//Lets check for a condition  , is there  'userData' available that means the currentUser is then show the data
-if(userData){
-  dispatch(login({userData}))
-}
-//And if there is currentUser is not available then else update the state.
-else{
-dispatch(logout())
-}
-})
-//Because the loading has been finished then update the state using setLoading() to false.
-.finally(()=>{
-  setLoading(false);
-})
-},[])
-
- //Conditional rendering using ternary operator:-
- //If loading is not true that means its false then show this or other wise then show this:-
- return !loading ?(
-  <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
-  <div className="w-full block" >
-<Header/>
-<main>
-  Todo:<Outlet/>
-</main>
-<Footer/>
-  </div>
-  </div>
- ) : null
+  // Conditional rendering using ternary operator: If loading is false, render the main content, else render null
+  return !loading ? (
+    <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
+      <div className="w-full block">
+        {/* Render Header component */}
+        <Header />
+        <main>
+          {/* Render nested routes */}
+          <Outlet />
+        </main>
+        {/* Render Footer component */}
+        <Footer />
+      </div>
+    </div>
+  ) : null;
 }
 
-export default App
+export default App;

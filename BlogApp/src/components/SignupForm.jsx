@@ -1,57 +1,52 @@
-import { useState } from "react" //useState hook is used to manage the state in functional components:-
-import authService from "../appwrite/auth"
-import{login as storeLogin} from '../store/authSlice'
-import{Link,useNavigate} from 'react-router-dom'
-import {useDispatch} from 'react-redux'
-import {Button,Input,Logo} from './index'
-import { useForm } from "react-hook-form"
+import { useState } from "react"; // Import useState hook for managing state in functional components
+import authService from "../appwrite/auth"; // Import authService for authentication
+import { login as storeLogin } from '../store/authSlice'; // Import login action from authSlice
+import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate for navigation
+import { useDispatch } from 'react-redux'; // Import useDispatch for dispatching actions
+import { Button, Input, Logo } from './index'; // Import Button, Input, and Logo components
+import { useForm } from "react-hook-form"; // Import useForm for handling form inputs
 
 function SignupForm() {
- //State is for displaying an errors:-
-    const [error,setError] = useState('');
+    // State for displaying errors
+    const [error, setError] = useState('');
 
- //To navigate to the route or link here we are using useNavigate():-
+    // Navigate to the route
     const navigate = useNavigate();
 
- //To dispatch an action , we are here using 'useDispatch()' hook:-
+    // Dispatch function
     const dispatch = useDispatch();
 
-// register and handleSubmit these are methods/events which comes from 'useForm' hook.
-    const {register,handleSubmit} = useForm();
+    // useForm hook methods for handling form inputs
+    const { register, handleSubmit } = useForm();
 
-// Lets create a signup(createAccount) method for event handling:-
-// And here we are using async/await because we are exchanging an information from an outer source:-
+    // Signup method for event handling
+    const createSignup = async (data) => {
+        setError(""); // Clear previous errors
+        try {
+            // Call createAccount method from authService
+            const session = await authService.createAccount(data);
+            if (session) {
+                const userData = await authService.getCurrentUser();
+                if (userData) {
+                    dispatch(storeLogin(userData)); // Dispatch login action with user data
+                    navigate('/'); // Navigate to the home route
+                }
+            }
+        } catch (error) {
+            setError(error.message); // Set error message if there's an error
+        }
+    }
 
-const createSignup = async(data)=>{
-    setError("");
-try {
-      //From authService there is a Signup (createAccount) method:-
-        //Response will come into a 'session' and it takes time because its from an outer source:-
-   const session =  await authService.createAccount(data);
-   if(session){
-   const userData =  await authService.getCurrentUser();
-   if(userData){
-    dispatch(storeLogin(userData))
-      //If the user is logged in then navigate to the route ('/').
-      navigate('/')
-   }
-   }
-} catch (error) {
-   setError(error.message) 
-}
-}
-  return (
-    <div
-    className='flex items-center justify-center w-full'
-    >
-        <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-        <div className="mb-2 flex justify-center">
+    return (
+        <div className='flex items-center justify-center w-full'>
+            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+                <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
                         <Logo width="100%" />
                     </span>
-        </div>
-        <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
-        <p className="mt-2 text-center text-base text-black/60">
+                </div>
+                <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
+                <p className="mt-2 text-center text-base text-black/60">
                     Already have an account?&nbsp;
                     <Link
                         to="/login"
@@ -60,45 +55,43 @@ try {
                         Sign In
                     </Link>
                 </p>
-                {/* //Lets start classic javascript:- */}
+                {/* Render error message if there's any */}
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-<form onSubmit={handleSubmit(createSignup)}>
-<div className='space-y-5'>
-<Input
-    label="Full Name: "
-    placeholder="Enter your full name"
-    type="text"
-{...register('name',{required:true,
-})}
-/>
-<Input
-     label="Email: "
-     placeholder="Enter your email"
-     type="email"
-     {
-    ...register('email',{required:true, validate: {
-                                matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                                "Email address must be a valid address",
-                            }})
-     }
-/>
-<Input
-    label="Password"
-    placeholder="Enter your password"
-    type="password"
-    {
-        ...register('password',{
-            required:true
-        })
-    }
-/>
-<Button> Create Account</Button>
-</div>
-</form>
-        </div>  
-    </div>
-  )
+                {/* Form for signup */}
+                <form onSubmit={handleSubmit(createSignup)}>
+                    <div className='space-y-5'>
+                        {/* Input fields for full name, email, and password */}
+                        <Input
+                            label="Full Name: "
+                            placeholder="Enter your full name"
+                            type="text"
+                            {...register('name', { required: true })}
+                        />
+                        <Input
+                            label="Email: "
+                            placeholder="Enter your email"
+                            type="email"
+                            {...register('email', {
+                                required: true,
+                                validate: {
+                                    matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                                        "Email address must be a valid address",
+                                }
+                            })}
+                        />
+                        <Input
+                            label="Password"
+                            placeholder="Enter your password"
+                            type="password"
+                            {...register('password', { required: true })}
+                        />
+                        {/* Button to submit the form */}
+                        <Button> Create Account</Button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 }
 
-
-export default SignupForm
+export default SignupForm;
