@@ -1,17 +1,18 @@
-import Header from "./Header/Header";
+import Select from './Select';
+import { Header } from './Header/Header.jsx';
 import Footer from "./Footer/Footer";
 import Container from './Container/Container'
 import Logo from    './Logo';
 import LogoutBtn from './Header/LogoutBtn'
-import Postcard from './PostCard';
-import Select from './Select';
 import RealTimeEditor from "./RealTimeEditor";
-import Input from './Input';
-import Button from './Button'
 import Signup from '../pages/Signup';
+import Login from '../pages/Login.jsx'
+import Button from './Button'
 import PostForm from './Post-form/PostForm.jsx';
 import PostCard from "./PostCard";
 import AuthLayout from './AuthLayout'
+import Input from './Input';
+
 
 
 export {
@@ -20,13 +21,14 @@ export {
     Container,
     Logo,
     LogoutBtn,
-    Postcard,
-    Select,
     RealTimeEditor,
-    Button,
-    Input,
     Signup,
+    Login,
+    Button,
     PostForm,
-PostCard,
-AuthLayout
+    PostCard,
+    AuthLayout,
+    Input,
+    Select,
+
 };

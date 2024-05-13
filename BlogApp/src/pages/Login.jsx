@@ -1,10 +1,10 @@
-import { LoginForm as LoginFormComponent } from '../components'; // Import the LoginForm component from components directory
+import { LoginForm as LoginComponent } from '../components/LoginForm'; // Import the LoginForm component from components directory
 
 function Login() {
   return (
     <div className='py-8'>
       {/* Render the LoginFormComponent */}
-      <LoginFormComponent />
+      <LoginComponent />
     </div>
   );
 }

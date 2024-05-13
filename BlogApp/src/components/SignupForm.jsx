@@ -1,12 +1,12 @@
 import { useState } from "react"; // Import useState hook for managing state in functional components
-import authService from "../appwrite/auth"; // Import authService for authentication
+import authService from '../appwrite/auth' // Import authService for authentication
 import { login as storeLogin } from '../store/authSlice'; // Import login action from authSlice
 import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate for navigation
 import { useDispatch } from 'react-redux'; // Import useDispatch for dispatching actions
 import { Button, Input, Logo } from './index'; // Import Button, Input, and Logo components
 import { useForm } from "react-hook-form"; // Import useForm for handling form inputs
 
-function SignupForm() {
+export function SignupForm() {
     // State for displaying errors
     const [error, setError] = useState('');
 
@@ -94,4 +94,4 @@ function SignupForm() {
     );
 }
 
-export default SignupForm;
+

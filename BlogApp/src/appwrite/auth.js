@@ -59,13 +59,15 @@ class AuthService {
      * Retrieves current user data.
      * @returns {Object} - Current user data or null
      */
+
     async getCurrentUser() {
         try {
             return await this.account.get();
         } catch (error) {
-            // Handle errors
-            throw error;
+            console.log("Appwrite serive :: getCurrentUser :: error", error);
         }
+
+        return null;
     }
 
     /**
