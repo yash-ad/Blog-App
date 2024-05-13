@@ -15,7 +15,8 @@ import EditPost from './pages/EditPost.jsx'
 import Post from './pages/Post.jsx';
 
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
   {
     path: "/",
     element: <App />,
@@ -72,7 +73,8 @@ const router = createBrowserRouter([
         },
     ],
 },
-])
+]
+)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
