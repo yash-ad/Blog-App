@@ -1,4 +1,4 @@
-import { LoginForm as LoginComponent } from '../components/LoginForm'; // Import the LoginForm component from components directory
+import { Login as LoginComponent } from '../components/Login'; // Import the LoginForm component from components directory
 
 function Login() {
   return (

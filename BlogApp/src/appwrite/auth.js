@@ -41,11 +41,6 @@ class AuthService {
         }
     }
 
-    /**
-     * Logs in a user with email and password.
-     * @param {Object} credentials - User credentials (email, password)
-     * @returns {Object} - Session data or error
-     */
     async login({ email, password }) {
         try {
             return await this.account.createEmailSession(email, password);
