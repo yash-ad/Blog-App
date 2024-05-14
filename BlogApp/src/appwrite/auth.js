@@ -50,10 +50,6 @@ class AuthService {
         }
     }
 
-    /**
-     * Retrieves current user data.
-     * @returns {Object} - Current user data or null
-     */
 
     async getCurrentUser() {
         try {

@@ -1,42 +1,36 @@
+// Importing necessary hooks and functions from React and Redux
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-
-
- //AuthLayout Manages authentication-related logic and controls access to routes.
-// Indicates if authentication is required (default: true)
-//  Child components to be rendered within the layout
-
-function AuthLayout({ children, authentication = true }) {
-  // State to manage loading status
+// Creating a functional component called AuthLayout which takes children and an optional authentication prop
+export default function AuthLayout({ children, authentication = true }) {
+  
+  // Using the useState hook to manage the loading state
   const [loading, setLoading] = useState(true);
 
-  // Hook for navigation within the application
+  // Using the useNavigate hook from react-router-dom to navigate between routes
   const navigate = useNavigate();
-  
-  // Access the authentication status from Redux store
+
+  // Using the useSelector hook from react-redux to access the authentication status from the Redux store
   const authStatus = useSelector((state) => state.auth.status);
 
-  // useEffect to handle side-effects and authentication logic
+  // Using the useEffect hook to perform side effects in the component
   useEffect(() => {
-    // Check if authentication is required and user is not authenticated
-    if (authentication && !authStatus) {
-      // Redirect to login page
+    // Checking if authentication is required and the user is not authenticated
+    if (authentication && authStatus !== authentication) {
+      // Redirecting the user to the login page if not authenticated
       navigate('/login');
     } 
-    // Check if authentication is not required and user is authenticated
-    else if (!authentication && authStatus) {
-      // Redirect to home page
+    // Checking if authentication is not required and the user is authenticated
+    else if (!authentication && authStatus !== authentication) {
+      // Redirecting the user to the home page if authenticated
       navigate('/');
     }
-    // Update loading state after authentication check
+    // Setting loading to false after the authentication check is done
     setLoading(false);
-    // Dependencies for useEffect
-  }, [authStatus, navigate, authentication]);
+  }, [authStatus, navigate, authentication]); // Dependencies array for useEffect
 
-  // Render loading message or child components
+  // Returning a loading indicator while the authentication check is in progress, otherwise rendering the children
   return loading ? <h1>Loading...</h1> : <>{children}</>;
 }
-
-export default AuthLayout;
