@@ -1,12 +1,13 @@
+import { Container, Logo, LogoutBtn } from '../index'; // Importing necessary components
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+import { useSelector } from 'react-redux'; // Importing useSelector to access Redux store state
 
-import { Container, Logo, LogoutBtn } from '../index';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import { useSelector } from 'react-redux';
-
+// Header component definition
 export function Header() {
-  const authStatus = useSelector((state) => state.auth.status);
-  const navigate = useNavigate(); // Use useNavigate
+  const authStatus = useSelector((state) => state.auth.status); // Accessing authentication status from Redux store
+  const navigate = useNavigate(); // Initializing the useNavigate hook for programmatic navigation
 
+  // Array containing navigation items with their respective properties
   const navItems = [
     { name: 'Home', slug: '/', active: true },
     { name: 'Login', slug: '/login', active: !authStatus },
@@ -16,30 +17,33 @@ export function Header() {
   ];
 
   return (
+    // Header container with styling classes
     <header className='py-3 shadow bg-gray-500'>
-      <Container>
-        <nav className='flex'>
-          <div className='mr-4'>
+      <Container> {/* Container component to manage layout */}
+        <nav className='flex'> {/* Flex container for navigation */}
+          <div className='mr-4'> {/* Logo container */}
+            {/* Link to home route with application logo */}
             <Link to='/'>
-              <Logo width='70px' />
+              <Logo width='70px' /> {/* Logo component with specified width */}
             </Link>
           </div>
-          <ul className='flex ml-auto'>
-            {navItems.map((item) =>
-              item.active ? (
-                <li key={item.slug}>
+          <ul className='flex ml-auto'> {/* Flex container for navigation items */}
+            {navItems.map((item) => // Mapping through navigation items array
+              item.active ? ( // Conditionally rendering active navigation items
+                <li key={item.slug}> {/* Unique key for each navigation item */}
+                  {/* Button for navigation with click event handling */}
                   <button
-                    onClick={() => navigate(item.slug)} // Use navigate
-                    className='inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+                    onClick={() => navigate(item.slug)} // Navigate to specified route on button click
+                    className='inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full' // Styling classes
                   >
-                    {item.name}
+                    {item.name} {/* Displaying navigation item name */}
                   </button>
                 </li>
-              ) : null
+              ) : null // Rendering null for inactive navigation items
             )}
-            {authStatus && (
+            {authStatus && ( // Conditional rendering of logout button based on authentication status
               <li>
-                <LogoutBtn />
+                <LogoutBtn /> {/* Logout button component */}
               </li>
             )}
           </ul>
