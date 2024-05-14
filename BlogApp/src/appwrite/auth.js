@@ -17,14 +17,10 @@ class AuthService {
             .setEndpoint(config.appwriteUrl)
             .setProject(config.appwriteProjectId);
 
-        this.account = new Account();
+        this.account = new Account(this.client);
     }
 
-    /**
-     * Creates a new account.
-     * @param {Object} userData - User data (email, password, name)
-     * @returns {Object} - User account data or error
-     */
+
     async createAccount({ email, password, name }) {
         try {
             // Create a new account
@@ -61,9 +57,6 @@ class AuthService {
         return null;
     }
 
-    /**
-     * Logs out the current user by deleting sessions.
-     */
     async logout() {
         try {
             await this.account.deleteSessions();
@@ -76,5 +69,7 @@ class AuthService {
 
 // Create a new instance of AuthService
 const authService = new AuthService();
+
+
 // Export the instance
 export default authService;

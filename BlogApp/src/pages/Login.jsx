@@ -3,7 +3,7 @@ import { Login as LoginComponent } from '../components/Login'; // Import the Log
 function Login() {
   return (
     <div className='py-8'>
-      {/* Render the LoginFormComponent */}
+      {/* Render the LoginComponent */}
       <LoginComponent />
     </div>
   );

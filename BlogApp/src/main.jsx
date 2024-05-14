@@ -5,9 +5,8 @@ import './index.css'; // Importing CSS styles
 import { Provider } from 'react-redux'; // Importing Provider for Redux
 import { store } from './store/store.js'; // Importing Redux store
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'; // Importing router utilities
-import Home from "./pages/Home"; // Importing the Home component
-import AuthLayout from './components/AuthLayout.jsx'; // Importing the AuthLayout component
-import Login from './pages/Login.jsx'; // Importing the Login component
+import Home from "./pages/Home.jsx"; // Importing the Home component
+import {AuthLayout,Login} from './components/index.js'; // Importing the AuthLayout component
 import SignUp from './pages/Signup.jsx'; // Importing the Signup component
 import AllPosts from './pages/AllPosts.jsx'; // Importing the AllPosts component
 import AddPost from './pages/AddPost.jsx'; // Importing the AddPost component
