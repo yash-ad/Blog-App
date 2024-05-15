@@ -18,11 +18,13 @@ export default function AuthLayout({ children, authentication = true }) {
   // Using the useEffect hook to perform side effects in the component
   useEffect(() => {
     // Checking if authentication is required and the user is not authenticated
+    //True && false !== true :- true && true :- True.
     if (authentication && authStatus !== authentication) {
       // Redirecting the user to the login page if not authenticated
       navigate('/login');
     } 
     // Checking if authentication is not required and the user is authenticated
+    // false && true !== true :- false && false :- false
     else if (!authentication && authStatus !== authentication) {
       // Redirecting the user to the home page if authenticated
       navigate('/');
@@ -32,5 +34,5 @@ export default function AuthLayout({ children, authentication = true }) {
   }, [authStatus, navigate, authentication]); // Dependencies array for useEffect
 
   // Returning a loading indicator while the authentication check is in progress, otherwise rendering the children
-  return loading ? <h1>Loading...</h1> : <>{children}</>;
+  return loading ? <h1>Loading.....</h1> : <>{children}</>;
 }

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'; // Importing ReactDOM for rendering
 import App from './App.jsx'; // Importing the main App component
 import './index.css'; // Importing CSS styles
 import { Provider } from 'react-redux'; // Importing Provider for Redux
-import { store } from './store/store.js'; // Importing Redux store
+import store  from './store/store.js'; // Importing Redux store
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'; // Importing router utilities
 import Home from "./pages/Home.jsx"; // Importing the Home component
 import {AuthLayout,Login} from './components/index.js'; // Importing the AuthLayout component

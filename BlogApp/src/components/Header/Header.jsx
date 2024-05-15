@@ -10,7 +10,7 @@ export function Header() {
   // Array containing navigation items with their respective properties
   const navItems = [
     { name: 'Home', slug: '/', active: true },
-    { name: 'Login', slug: '/login', active: !authStatus },
+    { name: 'Login', slug: '/login', active: !authStatus },   //Current authStatus by default from store is "true"
     { name: 'Signup', slug: '/signup', active: !authStatus },
     { name: 'All Posts', slug: '/all-posts', active: authStatus },
     { name: 'Add Post', slug: '/add-post', active: authStatus },
@@ -38,14 +38,16 @@ export function Header() {
                   >
                     {item.name} {/* Displaying navigation item name */}
                   </button>
+                    {console.log("button clicked")}
                 </li>
               ) : null // Rendering null for inactive navigation items
             )}
-            {authStatus && ( // Conditional rendering of logout button based on authentication status
+            {authStatus && ( // Conditional rendering of logout button based on authentication status,if authentication true and user is logged in then show them logout button
               <li>
                 <LogoutBtn /> {/* Logout button component */}
               </li>
             )}
+            
           </ul>
         </nav>
       </Container>

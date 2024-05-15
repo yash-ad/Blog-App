@@ -4,7 +4,7 @@ import { Client, Account, ID } from "appwrite";
 /**
  * AuthService class handles authentication-related operations.
  */
-class AuthService {
+export class AuthService {
     // Initialize Appwrite client and account properties
     client = new Client();
     account;
@@ -54,7 +54,7 @@ class AuthService {
             console.log("Appwrite serive :: getCurrentUser :: error", error);
         }
 
-        return null;
+        // return null;
     }
 
     async logout() {
