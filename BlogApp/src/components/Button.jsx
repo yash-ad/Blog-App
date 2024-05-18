@@ -1,18 +1,17 @@
-
-//Accept properties(props) as a parameters:-
-function Button({
-    //Also known as 'children' in a programming.
-buttonText,
-type = 'button',
-bgColor = 'bg-blue-600',
-textColor = 'text-white',
-className ='',
-...props
+export default function Button({
+    children, // Button text or elements
+    type = "button", // Default button type
+    bgColor = "bg-blue-600", // Default background color
+    textColor = "text-white", // Default text color
+    className = "", // Additional custom classes
+    ...props // Other props passed to the button
 }) {
-  return (
-    //Adding variables into the className that we have created in a properties in a paramter of a Button.
-    <Button className={`px-4 py-2 rounded-lg ${bgColor} ${className} ${type} ${textColor}`} {...props}>{buttonText}</Button>
-  )
+    return (
+        <button 
+            className={`px-4 py-2 rounded-lg ${bgColor} ${textColor} ${className}`} 
+            {...props} // Spread the additional props onto the button
+        >
+            {children} {/* Render button text or elements */}
+        </button>
+    );
 }
-
-export default Button

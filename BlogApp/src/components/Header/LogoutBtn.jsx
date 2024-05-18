@@ -1,33 +1,25 @@
-import authService from '../../appwrite/auth';
-import { logout } from '../../store/authSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'; // Import useDispatch for dispatching actions
+import authService from '../../appwrite/auth'; // Import authService for handling authentication
+import { logout } from '../../store/authSlice'; // Import logout action from authSlice
 
-function Logout() {
-    // Dispatch function to trigger the logout action
-    const dispatch = useDispatch();
+function LogoutBtn() {
+    const dispatch = useDispatch(); // Initialize dispatch to use for dispatching actions
 
-    // Event handler function for logout button click
+    // Function to handle logout
     const logoutHandler = () => {
-        // Call the logout method from authService (returns a Promise)
-        authService.logout()
-            .then(() => {
-                // If logout is successful, dispatch logout action to update Redux store
-                dispatch(logout());
-            })
-            .catch((error) => {
-                // If logout fails, log the error to the console
-                console.error(error);
-            });
+        authService.logout().then(() => { // Call logout method from authService
+            dispatch(logout()); // Dispatch logout action
+        });
     };
 
     return (
         <button
-            className='inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
-            onClick={logoutHandler}
+            className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+            onClick={logoutHandler} // Call logoutHandler function on button click
         >
-            Logout
+            Logout {/* Button text */}
         </button>
     );
 }
 
-export default Logout;
+export default LogoutBtn; // Export LogoutBtn component

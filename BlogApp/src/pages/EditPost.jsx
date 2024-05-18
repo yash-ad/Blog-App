@@ -1,43 +1,50 @@
-import { useState, useEffect } from "react";
-import appWriteService from '../appwrite/conf'; // Import the appWriteService for fetching and updating posts
-import { Container, PostForm } from '../components'; // Import the Container and PostForm components
-import { useNavigate, useParams } from "react-router-dom"; // Import hooks for navigation and getting URL parameters
+// Import necessary hooks from React and components
+import { useEffect, useState } from 'react';
+import { Container, PostForm } from '../components';
 
+// Import appwriteService for fetching and updating posts
+import appwriteService from "../appwrite/config";
+
+// Import necessary hooks from react-router-dom for navigation and accessing URL parameters
+import { useNavigate, useParams } from 'react-router-dom';
+
+// EditPost component for editing a specific post
 function EditPost() {
-    // Define state variables
-    const [post, setPost] = useState(null); // State variable to hold the post data
+    // State to store the fetched post
+    const [post, setPost] = useState(null);
 
-    // Get values from URL parameters
+    // Extracting slug from URL params
     const { slug } = useParams();
 
     // Hook for navigation
     const navigate = useNavigate();
 
-    // useEffect() hook to fetch post data when the component mounts or when the slug changes
+    // Effect hook to fetch post data based on slug
     useEffect(() => {
-        // Check if a slug exists
+        // Check if slug exists
         if (slug) {
-            // Fetch the post data using the appWriteService based on the slug
-            appWriteService.getPost(slug).then((post) => {
-                // If post data is fetched successfully, update the post state variable
-                setPost(post);
+            // Fetch post using appwriteService based on slug
+            appwriteService.getPost(slug).then((post) => {
+                // If post is found, set the post state
+                if (post) {
+                    setPost(post);
+                }
             });
         } else {
-            // If no slug exists, navigate back to the home page
+            // If slug does not exist, navigate to the home page
             navigate('/');
         }
-    }, [slug, navigate]); // Dependency array ensures that this effect runs when the slug or navigation function changes
+    }, [slug, navigate]); // Dependency array including slug and navigate
 
-    // Conditionally render the PostForm component if post data exists, otherwise render null
+    // Render the PostForm if post exists, otherwise render null
     return post ? (
         <div className='py-8'>
-            {/* Container component for layout */}
             <Container>
-                {/* Render the PostForm component and pass the post data as props */}
-                <PostForm data={post} />
+                <PostForm post={post} />
             </Container>
         </div>
     ) : null;
 }
 
+// Export the EditPost component
 export default EditPost;

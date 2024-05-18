@@ -1,92 +1,93 @@
+// Import necessary modules from React and ReactDOM
 import React from 'react';
-import ReactDOM from 'react-dom/client'; // Importing ReactDOM for rendering
-import App from './App.jsx'; // Importing the main App component
-import './index.css'; // Importing CSS styles
-import { Provider } from 'react-redux'; // Importing Provider for Redux
-import store  from './store/store.js'; // Importing Redux store
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'; // Importing router utilities
-import Home from "./pages/Home.jsx"; // Importing the Home component
-import {AuthLayout,Login} from './components/index.js'; // Importing the AuthLayout component
-import SignUp from './pages/Signup.jsx'; // Importing the Signup component
-import AllPosts from './pages/AllPosts.jsx'; // Importing the AllPosts component
-import AddPost from './pages/AddPost.jsx'; // Importing the AddPost component
-import EditPost from './pages/EditPost.jsx'; // Importing the EditPost component
-import Post from './pages/Post.jsx'; // Importing the Post component
+import ReactDOM from 'react-dom/client';
 
-// Creating a router using createBrowserRouter
-const router = createBrowserRouter(
-  [
-    {
-      // Root route configuration
-      path: "/", // Path of the root route
-      element: <App />, // Main App component as the root element
-      children: [
-        // Nested routes configuration
-        {
-          path: "/", // Path for the home page
-          element: <Home />, // Home component as the element
-        },
-        {
-          path: "/login", // Path for the login page
-          element: (
-            // AuthLayout wrapping the Login component with authentication set to false
-            <AuthLayout authentication={false}>
-              <Login />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "/signup", // Path for the signup page
-          element: (
-            // AuthLayout wrapping the SignUp component with authentication set to false
-            <AuthLayout authentication={false}>
-              <SignUp />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "/all-posts", // Path for the all-posts page
-          element: (
-            // AuthLayout wrapping the AllPosts component with authentication set to true
-            <AuthLayout authentication={true}>
-              <AllPosts />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "/add-post", // Path for the add-post page
-          element: (
-            // AuthLayout wrapping the AddPost component with authentication set to true
-            <AuthLayout authentication={true}>
-              <AddPost />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "/edit-post/:slug", // Path for the edit-post page with a dynamic slug parameter
-          element: (
-            // AuthLayout wrapping the EditPost component with authentication set to true
-            <AuthLayout authentication={true}>
-              <EditPost />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "/post/:slug", // Path for the post page with a dynamic slug parameter
-          element: <Post />, // Post component as the element
-        },
-      ],
-    },
-  ]
-);
+// Import the main App component and CSS file
+import App from './App.jsx';
+import './index.css';
 
-// Rendering the root React element using ReactDOM.createRoot
+// Import Provider from react-redux for Redux store integration
+import { Provider } from 'react-redux';
+import store from './store/store.js';
+
+// Import necessary modules from react-router-dom for routing
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+// Import various components and pages
+import Home from './pages/Home.jsx';
+import { AuthLayout, Login } from './components/index.js';
+import AddPost from "./pages/AddPost";
+import Signup from './pages/Signup';
+import EditPost from "./pages/EditPost";
+import Post from "./pages/Post";
+import AllPosts from "./pages/AllPosts";
+
+// Create a browser router with specified routes
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+        {
+            path: "/",
+            element: <Home />, // Home page component
+        },
+        {
+            path: "/login",
+            element: ( // Login page wrapped with AuthLayout for authentication
+                <AuthLayout authentication={false}>
+                    <Login />
+                </AuthLayout>
+            ),
+        },
+        {
+            path: "/signup",
+            element: ( // Signup page wrapped with AuthLayout for authentication
+                <AuthLayout authentication={false}>
+                    <Signup />
+                </AuthLayout>
+            ),
+        },
+        {
+            path: "/all-posts",
+            element: ( // AllPosts page wrapped with AuthLayout for authentication
+                <AuthLayout authentication>
+                    {" "}
+                    <AllPosts />
+                </AuthLayout>
+            ),
+        },
+        {
+            path: "/add-post",
+            element: ( // AddPost page wrapped with AuthLayout for authentication
+                <AuthLayout authentication>
+                    {" "}
+                    <AddPost />
+                </AuthLayout>
+            ),
+        },
+        {
+            path: "/edit-post/:slug",
+            element: ( // EditPost page wrapped with AuthLayout for authentication
+                <AuthLayout authentication>
+                    {" "}
+                    <EditPost />
+                </AuthLayout>
+            ),
+        },
+        {
+            path: "/post/:slug",
+            element: <Post />, // Post page component
+        },
+    ],
+},
+]);
+
+// Render the application with Redux store provider and router provider
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* Wrapping the entire app with Redux Provider */}
     <Provider store={store}>
-      {/* Providing the router to the app */}
-      <RouterProvider router={router} />
+      <RouterProvider router={router}/>
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

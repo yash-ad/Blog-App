@@ -1,33 +1,37 @@
+// Import necessary hooks from React
 import { useState, useEffect } from 'react';
-import appWriteService from '../appwrite/conf'; // Import the appWriteService for fetching posts
-import { Container, PostCard } from '../components'; // Import the Container and PostCard components
 
+// Import necessary components
+import { Container, PostCard } from '../components';
+
+// Import appwriteService for fetching posts
+import appwriteService from "../appwrite/config";
+
+// AllPosts component for displaying all posts
 function AllPosts() {
-    // Define state variables to hold the posts
+    // State to store fetched posts
     const [posts, setPosts] = useState([]);
 
-    // useEffect hook to fetch posts when the component mounts
+    // useEffect hook to fetch posts on component mount
     useEffect(() => {
-        // Call the getPosts method from the appWriteService to fetch posts
-        // Pass an empty array as the query parameter to retrieve all posts
-        appWriteService.getPosts([]).then((posts) => {
-            // If posts are fetched successfully, update the state with the posts data
+        // Function to fetch posts using appwriteService
+        appwriteService.getPosts([]).then((posts) => {
+            // If posts exist, update state with fetched posts
             if (posts) {
                 setPosts(posts.documents);
             }
         });
-    }, []); // Empty dependency array ensures that this effect runs only once after the component mounts
+    }, []); // Empty dependency array, so the effect runs only once on mount
 
+    // Return JSX to render all posts
     return (
         <div className='w-full py-8'>
-            {/* Container component for layout */}
             <Container>
                 <div className='flex flex-wrap'>
-                    {/* Map through the posts array and render a PostCard component for each post */}
+                    {/* Map over posts array and render each post using PostCard component */}
                     {posts.map((post) => (
                         <div key={post.$id} className='p-2 w-1/4'>
-                            {/* Pass the post data as props to the PostCard component */}
-                            <PostCard data={post} />
+                            <PostCard {...post} />
                         </div>
                     ))}
                 </div>
@@ -36,4 +40,5 @@ function AllPosts() {
     );
 }
 
+// Export the AllPosts component
 export default AllPosts;

@@ -1,11 +1,15 @@
-import {SignupForm as SignupComponent} from '../components/Signup'
+// Import the SignupComponent from components
+import { Signup as SignupComponent } from '../components';
 
-function SignUp() {
-    return (
-        <div className='py-8'>
-            <SignupComponent />
-        </div>
-    );
+// Signup component to render the signup form
+function Signup() {
+  return (
+    <div className='py-8'>
+      {/* Render the SignupComponent */}
+      <SignupComponent />
+    </div>
+  );
 }
 
-export default SignUp;
+// Export the Signup component
+export default Signup;

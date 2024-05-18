@@ -1,69 +1,62 @@
-// Import necessary modules and configurations
-import config from '../config/config';
-import { Client, Databases, ID, Storage, Query } from "appwrite";
+// Import necessary modules
+import conf from '../conf/conf';
+import { Client, ID, Databases, Storage, Query } from "appwrite";
 
-// Define the AppWriteService class
-export class AppWriteService {
-    // Initialize Appwrite client, databases, and bucket properties
+// Service class for handling database operations and file uploads
+export class Service {
+    // Initialize Appwrite client, databases, and bucket objects
     client = new Client();
     databases;
     bucket;
-
-    // Constructor to set up Appwrite client, databases, and bucket
+    
     constructor() {
+        // Set Appwrite endpoint and project ID
         this.client
-            .setEndpoint(config.appwriteUrl)
-            .setProject(config.appwriteProjectId);
-
+            .setEndpoint(conf.appwriteUrl)
+            .setProject(conf.appwriteProjectId);
+        // Initialize Databases object with the client
         this.databases = new Databases(this.client);
+        // Initialize Storage object with the client
         this.bucket = new Storage(this.client);
     }
 
-    // Method to create a new post or document
-    async createPost({ title, slug, content, featuredImage, status, userId }) {
+    // Method to create a new post
+    async createPost({title, slug, content, featuredImage, status, userId}) {
         try {
+            // Create a new document in the specified collection
             return await this.databases.createDocument(
-                config.appwriteDatabaseId,
-                config.appwriteCollectionId,
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
                 slug,
-                {
-                    title,
-                    content,
-                    featuredImage,
-                    status,
-                    userId,
-                }
+                { title, content, featuredImage, status, userId }
             );
         } catch (error) {
             console.log("Appwrite service :: createPost :: error", error);
         }
     }
 
-    // Method to update a post or document
-    async updatePost(slug, { title, content, featuredImage, status }) {
+    // Method to update an existing post
+    async updatePost(slug, {title, content, featuredImage, status}) {
         try {
+            // Update an existing document in the specified collection
             return await this.databases.updateDocument(
-                config.appwriteDatabaseId,
-                config.appwriteCollectionId,
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
                 slug,
-                {
-                    title,
-                    content,
-                    featuredImage,
-                    status,
-                }
+                { title, content, featuredImage, status }
             );
         } catch (error) {
             console.log("Appwrite service :: updatePost :: error", error);
         }
     }
 
-    // Method to delete a post or document
+    // Method to delete a post
     async deletePost(slug) {
         try {
+            // Delete a document from the specified collection
             await this.databases.deleteDocument(
-                config.appwriteDatabaseId,
-                config.appwriteCollectionId,
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
                 slug
             );
             return true;
@@ -73,12 +66,13 @@ export class AppWriteService {
         }
     }
 
-    // Method to get a post or document
+    // Method to get a single post by slug
     async getPost(slug) {
         try {
+            // Retrieve a document from the specified collection
             return await this.databases.getDocument(
-                config.appwriteDatabaseId,
-                config.appwriteCollectionId,
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
                 slug
             );
         } catch (error) {
@@ -87,12 +81,13 @@ export class AppWriteService {
         }
     }
 
-    // Method to get posts or documents
+    // Method to get multiple posts with optional query parameters
     async getPosts(queries = [Query.equal("status", "active")]) {
         try {
+            // List documents from the specified collection with optional queries
             return await this.databases.listDocuments(
-                config.appwriteDatabaseId,
-                config.appwriteCollectionId,
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
                 queries
             );
         } catch (error) {
@@ -104,8 +99,9 @@ export class AppWriteService {
     // Method to upload a file
     async uploadFile(file) {
         try {
+            // Create a new file in the specified bucket
             return await this.bucket.createFile(
-                config.appwriteBucketId,
+                conf.appwriteBucketId,
                 ID.unique(),
                 file
             );
@@ -118,8 +114,9 @@ export class AppWriteService {
     // Method to delete a file
     async deleteFile(fileId) {
         try {
+            // Delete a file from the specified bucket
             await this.bucket.deleteFile(
-                config.appwriteBucketId,
+                conf.appwriteBucketId,
                 fileId
             );
             return true;
@@ -129,16 +126,18 @@ export class AppWriteService {
         }
     }
 
-    // Method to get the preview of a file
+    // Method to get a file preview
     getFilePreview(fileId) {
+        // Get a preview of the specified file from the bucket
         return this.bucket.getFilePreview(
-            config.appwriteBucketId,
+            conf.appwriteBucketId,
             fileId
         );
     }
 }
 
-// Create a new instance of AppWriteService
-const appWriteService = new AppWriteService();
-// Export the instance
-export default appWriteService;
+// Create a singleton instance of the Service
+const service = new Service();
+
+// Export the singleton instance as default
+export default service;

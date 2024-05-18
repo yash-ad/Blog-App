@@ -1,44 +1,59 @@
-import { useState, useEffect } from "react";
-import appWriteService from '../appwrite/conf.js'; // Import appWriteService for fetching posts
-import { Container, PostCard } from '../components'; // Import Container and PostCard components
+// Import React, useEffect, and useState hooks
+import { useEffect, useState } from 'react';
 
+// Import appwriteService for fetching posts and Container, PostCard components for UI
+import appwriteService from "../appwrite/config";
+import { Container, PostCard } from '../components';
+
+// Home component to display posts
 function Home() {
-    const [posts, setPosts] = useState([]); // State variable to hold posts data
+    // State to store fetched posts
+    const [posts, setPosts] = useState([]);
 
+    // Effect hook to fetch posts on component mount
     useEffect(() => {
-        // Fetch posts when the component mounts
-        appWriteService.getPosts().then((posts) => {
+        // Fetch posts using appwriteService
+        appwriteService.getPosts().then((posts) => {
+            // If posts exist, update state with fetched posts
             if (posts) {
-                setPosts(posts.documents); // Set the posts state variable with the fetched posts
+                setPosts(posts.documents);
             }
         });
-    }, []); // Empty dependency array ensures this effect runs only once when the component mounts
+    }, []); // Dependency array ensures effect runs only on mount
 
+    // Render message if no posts are available
+    if (posts.length === 0) {
+        return (
+            <div className="w-full py-8 mt-4 text-center">
+                <Container>
+                    <div className="flex flex-wrap">
+                        <div className="p-2 w-full">
+                            <h1 className="text-2xl font-bold hover:text-gray-500">
+                                Login to read posts
+                            </h1>
+                        </div>
+                    </div>
+                </Container>
+            </div>
+        );
+    }
+
+    // Render posts if available
     return (
         <div className='w-full py-8'>
             <Container>
-                {/* Conditionally render based on the length of posts array */}
-                {posts.length === 0 ? (
-                    // Render this if there are no posts
-                    <div className="text-center">
-                        <h1 className="text-2xl font-bold mt-4 hover:text-gray-500">
-                            Login to read posts
-                        </h1>
-                    </div>
-                ) : (
-                    // Render posts if there are posts available
-                    <div className='flex flex-wrap'>
-                        {/* Map through posts array and render each post using PostCard component */}
-                        {posts.map((post) => (
-                            <div key={post.$id} className='p-2 w-1/4'>
-                                <PostCard {...post} />
-                            </div>
-                        ))}
-                    </div>
-                )}
+                <div className='flex flex-wrap'>
+                    {/* Map over posts array and render each post using PostCard component */}
+                    {posts.map((post) => (
+                        <div key={post.$id} className='p-2 w-1/4'>
+                            <PostCard {...post} />
+                        </div>
+                    ))}
+                </div>
             </Container>
         </div>
     );
 }
 
+// Export the Home component
 export default Home;

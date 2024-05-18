@@ -1,36 +1,26 @@
-import { useState } from "react"; // Import useState hook for managing state in functional components
-import authService from '../appwrite/auth' // Import authService for authentication
-import { login as storeLogin } from '../store/authSlice'; // Import login action from authSlice
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate for navigation
-import { useDispatch } from 'react-redux'; // Import useDispatch for dispatching actions
-import { Button, Input, Logo } from './index'; // Import Button, Input, and Logo components
-import { useForm } from "react-hook-form"; // Import useForm for handling form inputs
+import { useState } from 'react'; // Import useState from React for managing component state
+import authService from '../appwrite/auth'; // Import authService for authentication operations
+import { Link, useNavigate } from 'react-router-dom'; // Import Link for navigation and useNavigate for redirecting
+import { login } from '../store/authSlice'; // Import login action from authSlice for Redux state management
+import { Button, Input, Logo } from './index.js'; // Import UI components
+import { useDispatch } from 'react-redux'; // Import useDispatch from react-redux for dispatching actions
+import { useForm } from 'react-hook-form'; // Import useForm from react-hook-form for form handling
 
-export function SignupForm() {
-    // State for displaying errors
-    const [error, setError] = useState('');
+function Signup() {
+    const navigate = useNavigate(); // Initialize navigate to use for redirecting
+    const [error, setError] = useState(""); // Initialize error state to handle error messages
+    const dispatch = useDispatch(); // Initialize dispatch to use for dispatching Redux actions
+    const { register, handleSubmit } = useForm(); // Initialize form handling using useForm
 
-    // Navigate to the route
-    const navigate = useNavigate();
-
-    // Dispatch function
-    const dispatch = useDispatch();
-
-    // useForm hook methods for handling form inputs
-    const { register, handleSubmit } = useForm();
-
-    // Signup method for event handling
-    const createSignup = async (data) => {
-        setError(""); // Clear previous errors
+    // Function to handle account creation
+    const create = async (data) => {
+        setError(""); // Reset error state before starting the process
         try {
-            // Call createAccount method from authService
-            const session = await authService.createAccount(data);
-            if (session) {
-                const userData = await authService.getCurrentUser();
-                if (userData) {
-                    dispatch(storeLogin(userData)); // Dispatch login action with user data
-                    navigate('/'); // Navigate to the home route
-                }
+            const userData = await authService.createAccount(data); // Call authService to create account
+            if (userData) {
+                const userData = await authService.getCurrentUser(); // Get current user data if account creation is successful
+                if (userData) dispatch(login(userData)); // Dispatch login action with user data
+                navigate("/"); // Redirect to home page
             }
         } catch (error) {
             setError(error.message); // Set error message if there's an error
@@ -38,55 +28,53 @@ export function SignupForm() {
     }
 
     return (
-        <div className='flex items-center justify-center w-full'>
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-                <div className="mb-2 flex justify-center">
+        <div className="flex items-center justify-center"> {/* Center the content */}
+            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}> {/* Container for the form */}
+                <div className="mb-2 flex justify-center"> {/* Logo container */}
                     <span className="inline-block w-full max-w-[100px]">
-                        <Logo width="100%" />
+                        <Logo width="100%" /> {/* Logo component */}
                     </span>
                 </div>
-                <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
+                <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2> {/* Form title */}
                 <p className="mt-2 text-center text-base text-black/60">
                     Already have an account?&nbsp;
                     <Link
                         to="/login"
                         className="font-medium text-primary transition-all duration-200 hover:underline"
                     >
-                        Sign In
+                        Sign In {/* Link to sign in page */}
                     </Link>
                 </p>
-                {/* Render error message if there's any */}
-                {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-                {/* Form for signup */}
-                <form onSubmit={handleSubmit(createSignup)}>
-                    <div className='space-y-5'>
-                        {/* Input fields for full name, email, and password */}
+                {error && <p className="text-red-600 mt-8 text-center">{error}</p>} {/* Error message display */}
+
+                <form onSubmit={handleSubmit(create)}> {/* Form submission handler */}
+                    <div className='space-y-5'> {/* Spacing between form elements */}
                         <Input
                             label="Full Name: "
                             placeholder="Enter your full name"
-                            type="text"
-                            {...register('name', { required: true })}
+                            {...register("name", { required: true })} // Register input field for full name
                         />
                         <Input
                             label="Email: "
                             placeholder="Enter your email"
                             type="email"
-                            {...register('email', {
+                            {...register("email", {
                                 required: true,
                                 validate: {
-                                    matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                                        "Email address must be a valid address",
-                                }
-                            })}
+                                    matchPattern: (value) =>
+                                        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || "Email address must be a valid address",
+                                },
+                            })} // Register input field for email with validation
                         />
                         <Input
-                            label="Password"
-                            placeholder="Enter your password"
+                            label="Password: "
                             type="password"
-                            {...register('password', { required: true })}
+                            placeholder="Enter your password"
+                            {...register("password", { required: true })} // Register input field for password
                         />
-                        {/* Button to submit the form */}
-                        <Button> Create Account</Button>
+                        <Button type="submit" className="w-full">
+                            Create Account {/* Submit button */}
+                        </Button>
                     </div>
                 </form>
             </div>
@@ -94,4 +82,4 @@ export function SignupForm() {
     );
 }
 
-
+export default Signup;

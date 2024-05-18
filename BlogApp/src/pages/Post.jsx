@@ -1,63 +1,61 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+// Import necessary hooks and components
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
-import appWriteService from "../appwrite/conf";
 
-function Post() {
-    // State variables
+// Post component to display a single post
+export default function Post() {
+    // State to store the fetched post
     const [post, setPost] = useState(null);
 
-    // Navigate function from react-router-dom
-    const navigate = useNavigate();
-
-    // Get the slug parameter from the URL
+    // Extract slug from URL params
     const { slug } = useParams();
 
-    // Get user data from redux store
+    // Hook for navigation
+    const navigate = useNavigate();
+
+    // Select user data from Redux store
     const userData = useSelector((state) => state.auth.userData);
 
-    // Check if the user is the author of the post
-    const isAuthor = post && userData ? post.userId === userData.$Id : false;
+    // Check if the current user is the author of the post
+    const isAuthor = post && userData ? post.userId === userData.$id : false;
 
-    // Fetch post data based on the slug
+    // Effect hook to fetch post data based on slug
     useEffect(() => {
+        // Fetch post using appwriteService based on slug
         if (slug) {
-            appWriteService.getPost(slug).then((post) => {
-                if (post) {
-                    setPost(post);
-                } else {
-                    navigate("/");
-                }
+            appwriteService.getPost(slug).then((post) => {
+                if (post) setPost(post);
+                else navigate("/");
             });
-        } else {
-            navigate("/");
-        }
-    }, [slug, navigate]);
+        } else navigate("/");
+    }, [slug, navigate]); // Dependency array including slug and navigate
 
-    // Function to delete a post
+    // Function to delete the post
     const deletePost = () => {
-        appWriteService.deletePost(post.$Id).then((status) => {
+        appwriteService.deletePost(post.$id).then((status) => {
             if (status) {
-                appWriteService.deleteFile(post.featuredImage);
+                appwriteService.deleteFile(post.featuredImage);
                 navigate("/");
             }
         });
     };
 
-    // Render post if available
+    // Render post content if available
     return post ? (
         <div className="py-8">
             <Container>
-                {/* Post Image */}
+                {/* Post featured image */}
                 <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
-                        src={appWriteService.getFilePreview(post.featuredImage)}
+                        src={appwriteService.getFilePreview(post.featuredImage)}
                         alt={post.title}
                         className="rounded-xl"
                     />
-                    {/* Edit and Delete buttons for author */}
+                    {/* Edit and Delete buttons for the author */}
                     {isAuthor && (
                         <div className="absolute right-6 top-6">
                             <Link to={`/edit-post/${post.$id}`}>
@@ -71,15 +69,15 @@ function Post() {
                         </div>
                     )}
                 </div>
-                {/* Post Title */}
+                {/* Post title */}
                 <div className="w-full mb-6">
                     <h1 className="text-2xl font-bold">{post.title}</h1>
                 </div>
-                {/* Post Content */}
-                <div className="browser-css">{parse(post.content)}</div>
+                {/* Post content */}
+                <div className="browser-css">
+                    {parse(post.content)}
+                </div>
             </Container>
         </div>
-    ) : null;
+    ) : null; // Render nothing if post data is not available
 }
-
-export default Post;
