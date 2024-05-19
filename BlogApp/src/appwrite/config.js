@@ -1,10 +1,17 @@
-// Import necessary modules
+//conf is a configuration module that contains Appwrite's endpoint URL, project ID, database ID, collection ID, and bucket ID.
 import conf from '../conf/conf';
+//Client, ID, Databases, Storage, and Query are imported from the Appwrite SDK. 
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 
-// Service class for handling database operations and file uploads:-
+//Client is used to initialize the connection to Appwrite.
+//ID is used for generating unique IDs
+//Databases is for database operations
+//Storage is for file storage operations.
+//Query is used for querying documents.
+
+//The Service class provides methods to create, update, delete, and retrieve posts, as well as to upload, delete, and get previews of files using Appwrite. 
 export class Service {
-    // Initialize Appwrite client, databases, and bucket objects
+    //A Client object is created and stored in this.client.
     client = new Client();
     databases;
     bucket;
@@ -20,10 +27,12 @@ export class Service {
         this.bucket = new Storage(this.client);
     }
 
-    // Method to create a new post
+    ///1.Method to create a new post:-
+    //createPost is an asynchronous method that creates a new document (post) in the specified collection.
+    //It takes an object  with title, slug, content, featuredImage, status, and userId as arguments.
     async createPost({title, slug, content, featuredImage, status, userId}) {
         try {
-            // Create a new document in the specified collection
+            // It uses the createDocument method from Databases to create a new document with the provided data.
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -35,10 +44,12 @@ export class Service {
         }
     }
 
-    // Method to update an existing post
+    ///2.Method to update an existing post:-
+    //updatePost is an asynchronous method that updates an existing document (post) in the specified collection:-
+    //It takes a slug and an object with title, content, featuredImage, and status as arguments.
     async updatePost(slug, {title, content, featuredImage, status}) {
         try {
-            // Update an existing document in the specified collection
+            //It uses the updateDocument method from Databases to update the document with the provided data.
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -50,10 +61,12 @@ export class Service {
         }
     }
 
-    // Method to delete a post
+    ///3.Method to delete a post:-
+    //deletePost is an asynchronous method that deletes a document (post) from the specified collection.
+    //It takes a slug as an argument.
     async deletePost(slug) {
         try {
-            // Delete a document from the specified collection
+            //It uses the deleteDocument method from Databases to delete the document.
             await this.databases.deleteDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -66,10 +79,11 @@ export class Service {
         }
     }
 
-    // Method to get a single post by slug
+    ///4.Method to get a single post by slug:-
+    //getPost is an asynchronous method that retrieves a document (post) by its slug.
     async getPost(slug) {
         try {
-            // Retrieve a document from the specified collection
+            //It uses the getDocument method from Databases to get the document.
             return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -81,10 +95,12 @@ export class Service {
         }
     }
 
-    // Method to get multiple posts with optional query parameters
+    ///5.Method to get multiple posts with optional query parameters
+    //getPosts is an asynchronous method that retrieves multiple documents (posts) with optional query parameters.
     async getPosts(queries = [Query.equal("status", "active")]) {
         try {
-            // List documents from the specified collection with optional queries
+           //It uses the listDocuments method from Databases to list the documents based on the provided queries.
+           //The default query is to get documents where status is "active".
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -96,10 +112,12 @@ export class Service {
         }
     }
 
-    // Method to upload a file
+    ///6.Method to upload a file
+    //uploadFile is an asynchronous method that uploads a file to the specified bucket.
+    //It takes a file as an argument.
     async uploadFile(file) {
         try {
-            // Create a new file in the specified bucket
+            //It uses the createFile method from Storage to upload the file with a unique ID:-
             return await this.bucket.createFile(
                 conf.appwriteBucketId,
                 ID.unique(),
@@ -111,24 +129,29 @@ export class Service {
         }
     }
 
-    // Method to delete a file
+    ///7.Method to delete a file
+    //deleteFile is an asynchronous method that deletes a file from the specified bucket.
+   //It takes a fileId as an argument.
     async deleteFile(fileId) {
         try {
-            // Delete a file from the specified bucket
+            //It uses the deleteFile method from Storage to delete the file.
             await this.bucket.deleteFile(
                 conf.appwriteBucketId,
                 fileId
             );
             return true;
+            //If an error occurs, it logs the error and returns false; otherwise, it returns true.
         } catch (error) {
             console.log("Appwrite service :: deleteFile :: error", error);
             return false;
         }
     }
 
-    // Method to get a file preview
+    ///8.Method to get a file preview:-
+    //getFilePreview is a method that gets a preview of the specified file from the bucket.
+    //It takes a fileId as an argument.
     getFilePreview(fileId) {
-        // Get a preview of the specified file from the bucket
+        //It uses the getFilePreview method from Storage to get the file preview.
         return this.bucket.getFilePreview(
             conf.appwriteBucketId,
             fileId
