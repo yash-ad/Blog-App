@@ -2,7 +2,7 @@
 import conf from '../conf/conf';
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 
-// Service class for handling database operations and file uploads
+// Service class for handling database operations and file uploads:-
 export class Service {
     // Initialize Appwrite client, databases, and bucket objects
     client = new Client();

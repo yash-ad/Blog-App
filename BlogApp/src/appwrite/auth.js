@@ -1,43 +1,60 @@
 // Import necessary modules
 import conf from '../conf/conf';
-import { Client, Account ,ID} from "appwrite";
+import { Client, Account ,ID} from "appwrite"; //Imported from Appwrite SDK (Software Development Kit):-
+//Client is used to initialize the connection to Appwrite.
+//Account is used for managing user accounts.
+//ID is used for generating unique IDs.
 
-// AuthService class for handling authentication
+
+
+
+//AuthService is a class that manages authentication-related operations.
+//The AuthService class provides methods to create a new user account, log in, get details of the currently logged-in user, and log out:-
 export class AuthService {
-    // Initialize Appwrite client and account objects
+ //A Client object is created and stored in this.client.
     client = new Client();
     account;
 
     constructor() {
         // Set Appwrite endpoint and project ID
         this.client
+        //setEndpoint sets the Appwrite API endpoint using the URL from the configuration.
             .setEndpoint(conf.appwriteUrl)
+            //setProject sets the Appwrite project ID from the configuration.
             .setProject(conf.appwriteProjectId);
-        // Initialize Account object with the client
+//An Account object is initialized with the client and stored in this.account.
         this.account = new Account(this.client);      
     }
 
-    // Method to create a new account
+    ///1.Method to create a new account:-
+
+    //createAccount is an asynchronous method that creates a new user account.
+    //It takes an object with email, password, and name as arguments.
     async createAccount({email, password, name}) {
         try {
-            // Create a new account using email, password, and name
+            // Create a new account using email, password, and name:-
+            //ID.unique() generates a unique ID for the new account.
             const userAccount = await this.account.create(ID.unique(), email, password, name);
-            // If account creation is successful, attempt login
+            //If account creation is successful, it calls the login method to log the user in and returns the session.
             if (userAccount) {
                 return this.login({email, password});
             } else {
                 return  userAccount;
             }
+            //If account creation fails , it throws an error:-
         } catch (error) {
             throw error;
         }
     }
 
-    // Method to login with email and password
+    ///2.Method to login with email and password:-
+    //login is an asynchronous method that logs a user in using their email and password.
     async login({email, password}) {
         try {
+            //Debugging
             console.log("Attempting to log in with email:", email);
-            console.log("Account object:", this.account); // Check if the Account object is properly initialized
+            //Check if the Account object is properly initialized
+            console.log("Account object:", this.account);
             // Create a new session using email and password
             const session = await this.account.createEmailPasswordSession(email, password);
             console.log("Login successful. Session:", session);
@@ -48,10 +65,11 @@ export class AuthService {
         }
     }
 
-    // Method to get current user details
+    ///3.Method to get current user details:-
+    //getCurrentUser is an asynchronous method that retrieves details of the currently logged-in user.
     async getCurrentUser() {
         try {
-            // Retrieve current user details from Appwrite
+            //It uses the 'get' method of the Account object.
             return await this.account.get();
         } catch (error) {
             console.log("Appwrite service :: getCurrentUser :: error", error);
@@ -59,10 +77,11 @@ export class AuthService {
         return null;
     }
 
-    // Method to logout user
+    ///4.Method to logout user:-
+    //logout is an asynchronous method that logs out the user.
     async logout() {
         try {
-            // Delete all active sessions to logout user
+            //It deletes all active sessions for the user using deleteSessions.
             await this.account.deleteSessions();
         } catch (error) {
             console.log("Appwrite service :: logout :: error", error);

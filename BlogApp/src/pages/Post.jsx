@@ -4,23 +4,24 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
-import { useSelector } from "react-redux";
+import { useSelector  } from "react-redux";
 
 // Post component to display a single post
 export default function Post() {
     // State to store the fetched post
     const [post, setPost] = useState(null);
 
-    // Extract slug from URL params
+    // Extract slug from URL params:-
     const { slug } = useParams();
 
-    // Hook for navigation
+    // Hook for navigation:-
     const navigate = useNavigate();
 
+    
     // Select user data from Redux store
     const userData = useSelector((state) => state.auth.userData);
 
-    // Check if the current user is the author of the post
+    // Check if the current user is the author of the post.
     const isAuthor = post && userData ? post.userId === userData.$id : false;
 
     // Effect hook to fetch post data based on slug
