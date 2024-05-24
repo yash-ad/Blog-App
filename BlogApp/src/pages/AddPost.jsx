@@ -1,19 +1,15 @@
-// Import necessary components
-import { Container, PostForm } from '../components';
+import React from 'react'
+import { Container, PostForm } from '../components/index'
 
-// AddPost component for adding a new post
 function AddPost() {
   return (
-    // Wrapper div with padding
     <div className='py-8'>
-      {/* Container component for layout */}
-      <Container>
-        {/* PostForm component for adding new post */}
-        <PostForm />
-      </Container>
+      <div><h1 className=' text-[2rem] md:text-[2.5rem] text-center font-semibold' >Add Post</h1></div>
+        <Container>
+            <PostForm />
+        </Container>
     </div>
-  );
+  )
 }
 
-// Export the AddPost component
-export default AddPost;
+export default AddPost

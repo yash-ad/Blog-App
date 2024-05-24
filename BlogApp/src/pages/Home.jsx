@@ -1,59 +1,45 @@
-// Import React, useEffect, and useState hooks
-import { useEffect, useState } from 'react';
 
-// Import appwriteService for fetching posts and Container, PostCard components for UI
-import appwriteService from "../appwrite/config";
-import { Container, PostCard } from '../components';
+import { Container, Button } from '../components/index'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-// Home component to display posts
+
+
+
 function Home() {
-    // State to store fetched posts
-    const [posts, setPosts] = useState([]);
+  const status = useSelector((state) => state.auth.status)
 
-    // Effect hook to fetch posts on component mount
-    useEffect(() => {
-        // Fetch posts using appwriteService
-        appwriteService.getPosts().then((posts) => {
-            // If posts exist, update state with fetched posts
-            if (posts) {
-                setPosts(posts.documents);
-            }
-        });
-    }, []); // Dependency array ensures effect runs only on mount
+  const navigate = useNavigate();
 
-    // Render message if no posts are available
-    if (posts.length === 0) {
-        return (
-            <div className="w-full py-8 mt-4 text-center">
-                <Container>
-                    <div className="flex flex-wrap">
-                        <div className="p-2 w-full">
-                            <h1 className="text-2xl font-bold hover:text-gray-500">
-                                Login to read posts
-                            </h1>
-                        </div>
-                    </div>
-                </Container>
-            </div>
-        );
+  const navigateHome = () => {
+    if (status) {
+      navigate('/all-posts')
+    } else {
+      navigate('/login')
     }
+  };
 
-    // Render posts if available
-    return (
-        <div className='w-full py-8'>
-            <Container>
-                <div className='flex flex-wrap'>
-                    {/* Map over posts array and render each post using PostCard component */}
-                    {posts.map((post) => (
-                        <div key={post.$id} className='p-2 w-1/4'>
-                            <PostCard {...post} />
-                        </div>
-                    ))}
-                </div>
-            </Container>
+  return (
+    <div className="w-full my-20 md:py-8 text-center md:min-h-auto bg-dark">
+      <Container>
+        <div className="flex flex-col gap-20 my-20 md:my-14 items-center justify-around">
+          <div className="flex flex-col items-center md:items-start">
+            <h1 className="text-[52px] md:text-[52px] lg:text-[72px] hero-heading mx-auto">
+              Welcome to the <span className="text-customPink">BlogHub</span>
+            </h1>
+            <div className="mx-auto">
+              <Button
+                onClick={() => navigateHome()}
+                className="my-7 md:py-2 py-0 px-5 text-white font-weight-400 bg-customPink rounded-xl shadow-lg duration-200 hover:cursor-pointer hover:bg-white hover:text-black hover:scale-105 md:mx-2 md:my-6"
+              >
+                {status ? 'See Posts' : 'Get Started'}
+              </Button>
+            </div>
+          </div>
         </div>
-    );
+      </Container>
+    </div>
+  )
 }
 
-// Export the Home component
-export default Home;
+export default Home

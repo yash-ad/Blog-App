@@ -1,84 +1,78 @@
-// Import necessary hooks and components
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import appwriteService from "../appwrite/config";
-import { Button, Container } from "../components";
-import parse from "html-react-parser";
-import { useSelector  } from "react-redux";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import appwriteService from '../appwrite/config';
+import { Button, Container } from '../components/index.js';
+import parse from 'html-react-parser';
+import { useSelector } from 'react-redux';
 
-// Post component to display a single post
 export default function Post() {
-    // State to store the fetched post
-    const [post, setPost] = useState(null);
+  const [post, setPost] = useState(null);
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state.auth.userData);
+  let id = userData.$id !== undefined ? userData.$id : userData.userData.$id;
+  const isAuthor = post && userData ? post.userId === userData.$id : false;
 
-    // Extract slug from URL params:-
-    const { slug } = useParams();
+  // Logging to debug slug
+  console.log('Extracted slug from URL:', slug);
 
-    // Hook for navigation:-
-    const navigate = useNavigate();
 
-    
-    // Select user data from Redux store
-    const userData = useSelector((state) => state.auth.userData);
+  useEffect(() => {
+    if (slug) {
+      appwriteService.getPost(slug).then((post) => {
+        if (post) {
+          setPost(post);
+        } else {
+          navigate('/');
+        }
+      })
+      }
+     else {
+      navigate('/');
+    }
+  }, [slug, navigate]);
 
-    // Check if the current user is the author of the post.
-    const isAuthor = post && userData ? post.userId === userData.$id : false;
+  const deletePost = () => {
+    appwriteService.deletePost(post.$id).then((status) => {
+      if (status) {
+        appwriteService.deleteFile(post.featuredImage)
+        navigate('/');
+      }
+    })
+  };
 
-    // Effect hook to fetch post data based on slug
-    useEffect(() => {
-        // Fetch post using appwriteService based on slug
-        if (slug) {
-            appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
-            });
-        } else navigate("/");
-    }, [slug, navigate]); // Dependency array including slug and navigate
+  return post ? (
+    <div className="py-8 flex justify-center">
+      <div className="max-w-[57rem]">
+        <Container>
+          <div className="w-full flex justify-center mb-4 relative border rounded-xl overflow-hidden">
+            <img
+              src={appwriteService.getFilePreview(post.featuredImage)}
+              alt={post.title}
+              className="max-h-80 w-auto max-w-full h-auto object-contain mx-auto"
+            />
 
-    // Function to delete the post
-    const deletePost = () => {
-        appwriteService.deletePost(post.$id).then((status) => {
-            if (status) {
-                appwriteService.deleteFile(post.featuredImage);
-                navigate("/");
-            }
-        });
-    };
-
-    // Render post content if available
-    return post ? (
-        <div className="py-8">
-            <Container>
-                {/* Post featured image */}
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
-                        src={appwriteService.getFilePreview(post.featuredImage)}
-                        alt={post.title}
-                        className="rounded-xl"
-                    />
-                    {/* Edit and Delete buttons for the author */}
-                    {isAuthor && (
-                        <div className="absolute right-6 top-6">
-                            <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
-                                    Edit
-                                </Button>
-                            </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
-                                Delete
-                            </Button>
-                        </div>
-                    )}
-                </div>
-                {/* Post title */}
-                <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
-                </div>
-                {/* Post content */}
-                <div className="browser-css">
-                    {parse(post.content)}
-                </div>
-            </Container>
-        </div>
-    ) : null; // Render nothing if post data is not available
+            {isAuthor && (
+              <div className="absolute right-6 top-6 space-x-2">
+                <Link to={`/edit-post/${post.$id}`}>
+                  <Button bgColor="bg-green-500">
+                    Edit
+                  </Button>
+                </Link>
+                <Button bgColor="bg-red-500" onClick={deletePost}>
+                  Delete
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className="w-full mb-6">
+            <h1 className="text-2xl font-bold">{post.title}</h1>
+          </div>
+          <div className="browser-css text-left leading-relaxed">
+            {parse(String(post.content))}
+          </div>
+        </Container>
+      </div>
+    </div>
+  ) : null;
 }

@@ -1,15 +1,14 @@
-// Import the SignupComponent from components
-import { Signup as SignupComponent } from '../components';
+import React from "react";
+import { Signup as SignupComponent } from '../components/index.js'
 
-// Signup component to render the signup form
 function Signup() {
   return (
-    <div className='py-8'>
-      {/* Render the SignupComponent */}
-      <SignupComponent />
-    </div>
-  );
+    <>
+      <div className="py-0 flex flex-col items-center">
+        <SignupComponent />
+      </div>
+    </>
+  )
 }
 
-// Export the Signup component
-export default Signup;
+export default Signup
