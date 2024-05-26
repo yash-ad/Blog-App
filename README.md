@@ -26,7 +26,8 @@ To get a local copy of the project up and running, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/blogzy.git
+   git clone https://github.com/yash-ad/Blogzy-Blog-App.git
+   
 
 2. Install dependencies:
 
