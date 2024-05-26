@@ -1,8 +1,12 @@
-
-
-function Container({children}) {
-  return <div className='w-full max-w-7xl mx-auto px-4'>{children}</div>;
-  
+// Define a functional component named Container that takes children as props
+function Container({ children }) {
+  // Return a div element with specified classNames and children
+  return (
+    <div className='w-full max-w-7xl mx-auto px-4'>
+      {children}
+    </div>
+  );
 }
 
-export default Container
+// Export the Container component as default
+export default Container;

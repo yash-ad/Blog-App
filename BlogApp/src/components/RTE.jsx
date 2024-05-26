@@ -1,29 +1,31 @@
 
-import React from "react";
-import { Editor } from '@tinymce/tinymce-react'
-import { Controller } from 'react-hook-form'
-import conf from "../conf/conf.js"
+import { Editor } from '@tinymce/tinymce-react'; // Importing the Editor component from tinymce-react library
+import { Controller } from 'react-hook-form'; // Importing the Controller component from react-hook-form library
 
-
+// Defining the RTE (Rich Text Editor) component
 function RTE({ name, control, label, defaultValue = '' }) {
-  // control (comes from react-hook-form) - responsible to move the state of this (RTE) component to the form
+  // The RTE component receives props like name, control, label, and defaultValue
+
   return (
     <>
       <div className="w-full">
+        {/* Rendering the label if provided */}
         {label && <label className="inline-block mb-1 pl-1">{label}</label>}
 
+        {/* Using the Controller component from react-hook-form to connect the RTE component with the form */}
         <Controller
-          name = {name || 'content'}
-          control = {control} // by this, the parent element can get control of RTE
-          render = {({ field: { onChange } }) => (
+          name={name || 'content'} // Setting the name for the controller (default: 'content')
+          control={control} // Providing control to the RTE component to handle form state
+          render={({ field: { onChange } }) => (
+            // Using the render prop of Controller to render the Editor component
             <Editor
-            apiKey='x3jm9ayergddlj0nb1ahmml1iv3lta461nsktbjocr8hv7td'
-              initialValue={defaultValue}
+              apiKey='x3jm9ayergddlj0nb1ahmml1iv3lta461nsktbjocr8hv7td' // Tinymce API key
+              initialValue={defaultValue} // Setting the initial value of the editor
               init={{
-                initialValue: defaultValue,
-                height: 500,
-                menubar: true,
-                plugins: [
+                initialValue: defaultValue, // Initial value of the editor
+                height: 500, // Setting the height of the editor
+                menubar: true, // Showing the menubar in the editor
+                plugins: [ // List of plugins to be included in the editor
                   'image',
                   'advlist',
                   'autolink',
@@ -45,18 +47,18 @@ function RTE({ name, control, label, defaultValue = '' }) {
                   'wordcount',
                   'anchor',
                 ],
-                toolbar:
+                toolbar: // Setting the toolbar options for the editor
                   'undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-                content_style:
+                content_style: // Setting the content style for the editor
                   'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
               }}
-              onEditorChange={onChange}
+              onEditorChange={onChange} // Handling editor change events
             />
           )}
         />
       </div>
     </>
-  )
+  );
 }
 
-export default RTE;
+export default RTE; // Exporting the RTE component as the default export
