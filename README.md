@@ -54,3 +54,6 @@ This project is licensed under the MIT License.
 # Redux
 # React Router
 # Appwrite
+
+
+Big thanks to Hitesh Chaudhary Sir for teaching production-level app development with his expertise and efforts on the Chaiaurcode YouTube channel.
