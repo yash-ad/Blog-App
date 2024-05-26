@@ -1,7 +1,7 @@
 
 import { Editor } from '@tinymce/tinymce-react'; // Importing the Editor component from tinymce-react library
 import { Controller } from 'react-hook-form'; // Importing the Controller component from react-hook-form library
-
+import conf from '../conf/conf.js';
 // Defining the RTE (Rich Text Editor) component
 function RTE({ name, control, label, defaultValue = '' }) {
   // The RTE component receives props like name, control, label, and defaultValue
@@ -19,7 +19,7 @@ function RTE({ name, control, label, defaultValue = '' }) {
           render={({ field: { onChange } }) => (
             // Using the render prop of Controller to render the Editor component
             <Editor
-              apiKey='x3jm9ayergddlj0nb1ahmml1iv3lta461nsktbjocr8hv7td' // Tinymce API key
+            apiKey= {conf.tinyMCEApiKey} // Tinymce API key
               initialValue={defaultValue} // Setting the initial value of the editor
               init={{
                 initialValue: defaultValue, // Initial value of the editor
