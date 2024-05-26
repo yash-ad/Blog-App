@@ -32,7 +32,7 @@ function Login() {
             <div className={`mx-auto w-full max-w-lg bg-highlight-color dark:bg-gray-100 rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
-                        <Logo width="100%" /> {/* Rendering the Logo component */}
+                        <Logo width="100%" /> 
                     </span>
                 </div>
                 <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
@@ -49,11 +49,11 @@ function Login() {
                 <form onSubmit={handleSubmit(login)} className='mt-8'> {/* Handling form submission */}
                     <div className='space-y-5'>
                         <Input
-                            label="Email: " // Label for email input
-                            placeholder="Enter your email" // Placeholder for email input
-                            type="email" // Type of input (email)
-                            {...register("email", { // Registering email input with form validation rules
-                                required: true, // Email is required
+                            label="Email: " 
+                            placeholder="Enter your email" 
+                            type="email"
+                            {...register("email", { 
+                                required: true, 
                                 validate: {
                                     matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || // Validating email format
                                     "Email address must be a valid address",
@@ -61,16 +61,16 @@ function Login() {
                             })}
                         />
                         <Input
-                            label="Password: " // Label for password input
-                            type="password" // Type of input (password)
-                            placeholder="Enter your password" // Placeholder for password input
-                            {...register("password", { // Registering password input with form validation rules
-                                required: true, // Password is required
+                            label="Password: "
+                            type="password" 
+                            placeholder="Enter your password" 
+                            {...register("password", { 
+                                required: true,
                             })}
                         />
                         <Button
-                            type="submit" // Setting button type to submit
-                            className="w-full" // Setting button width to full width
+                            type="submit"
+                            className="w-full" 
                         >
                             Sign in {/* Button text */}
                         </Button>

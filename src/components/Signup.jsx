@@ -42,7 +42,7 @@ function Signup() {
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[100px]">
             {/* Rendering the Logo component */}
-            <Logo width="100%" />
+            <Logo  width="100% " />
           </span>
         </div>
         <p className="mt-2 text-center text-base text-black/60">

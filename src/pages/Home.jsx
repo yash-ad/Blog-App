@@ -23,12 +23,12 @@ function Home() {
             <h1 className="text-[52px] md:text-[52px] lg:text-[72px] hero-heading mx-auto"> {/* Heading */}
               Welcome to the <span className="text-customPink">Blogzy</span> {/* Text with custom styling */}
             </h1>
-            <div className="mx-auto"> {/* Container for the button */}
-              <Button // Button component for navigation
-                onClick={() => navigateHome()} // Handling click event to navigate
-                className="my-7 md:py-2 py-0 px-5 text-white font-weight-400 bg-customPink rounded-xl shadow-lg duration-200 hover:cursor-pointer hover:bg-white hover:text-black hover:scale-105 md:mx-2 md:my-6" // Styling for the button
+            <div className="mx-auto"> 
+              <Button 
+                onClick={() => navigateHome()}
+                className="my-7 md:py-2 py-0 px-5 text-white font-weight-400 bg-customPink rounded-xl shadow-lg duration-200 hover:cursor-pointer hover:bg-white hover:text-black hover:scale-105 md:mx-2 md:my-6" 
               >
-                {status ? 'See Posts' : 'Get Started'} {/* Button text based on authentication status */}
+                {status ? 'See Posts' : 'Get Started'} 
               </Button>
             </div>
           </div>

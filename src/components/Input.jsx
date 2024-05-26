@@ -8,10 +8,10 @@ const Input = forwardRef(function Input(
   
   return (
     <>
-      <div className="w-full"> // Creating a div wrapper for the input element
-        {label && ( // Rendering the label if provided
-          <label className="inline-block mb-1 pl-1" htmlFor={id}> // Creating a label element with htmlFor attribute set to the generated ID
-            {label} // Displaying the label text
+      <div className="w-full"> 
+        {label && ( 
+          <label className="inline-block mb-1 pl-1" htmlFor={id}> 
+            {label}
           </label>
         )}
         <input

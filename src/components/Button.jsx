@@ -11,7 +11,7 @@ function Button({
       className={`px-2 py-1 rounded-lg ${bgColor} ${textcolor} ${className}`} // Concatenating classes for styling using template literals
       {...props} // Spread other props to the button element
     >
-      {children} // Rendering the text inside the button
+      {children} 
     </button>
   )
 }

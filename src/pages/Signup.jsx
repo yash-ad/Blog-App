@@ -4,8 +4,8 @@ import { Signup as SignupComponent } from '../components/index.js'; // Importing
 function Signup() {
   return (
     <>
-      <div className="py-0 flex flex-col items-center"> {/* Container for the Signup component */}
-        <SignupComponent /> {/* Rendering the Signup component */}
+      <div className="py-0 flex flex-col items-center">
+        <SignupComponent /> 
       </div>
     </>
   );
