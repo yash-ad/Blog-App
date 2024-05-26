@@ -24,17 +24,22 @@ Blogzy is a modern blogging platform built using React.js, Redux, React Router, 
 To get a local copy of the project up and running, follow these steps:
 
 1. Clone the repository:
+https://github.com/Kunjshah20/Chai-Blog-Hub
 
-   ```bash
-   git clone https://github.com/yash-ad/Blogzy-Blog-App.git
-   
+2. Install Dependencies: npm install
 
-2. Install dependencies:
+3. Run npm run dev to get the project started.
 
-```bash
-cd blogzy
-npm install
-```
+## 📦 Dependencies
+"@reduxjs/toolkit": "^2.0.1"
+"@tinymce/tinymce-react": "^4.3.2"
+"appwrite": "^13.0.1"
+"html-react-parser": "^5.1.1"
+"react": "^18.2.0"
+"react-dom": "^18.2.0"
+"react-hook-form": "^7.49.3"
+"react-redux": "^9.1.0"
+"react-router-dom": "^6.21.3"
 
 
 
@@ -47,8 +52,6 @@ Make your changes.
 Commit your changes (git commit -am 'Add new feature').
 Push to the branch (git push origin feature/new-feature).
 Create a new pull request.
-📄 License
-This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgements
 # React
