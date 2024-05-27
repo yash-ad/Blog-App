@@ -15,12 +15,12 @@ export default function Post() {
   console.log('User Data:', userData);
 
   // Extracting user ID from user data
-  let id = userData && userData.$id ? userData.$id : userData?.userData?.$id;
+  let id = String(userData && userData.$id ? userData.$id : userData?.userData?.$id);
   // Logging to debug id
   console.log('Extracted user ID:', id);
 
   // Checking if the logged-in user is the author of the post
-  const isAuthor = post && userData ? post.userId === id : false;
+  const isAuthor = String(post && userData ? post.userid === id : false);
 
     // Logging to debug post.userId and isAuthor
     console.log('Post User ID:', post?.userId);
