@@ -19,7 +19,9 @@ function Login() {
             const session = await authService.login(data); // Calling the login function from authService with provided data
             if (session) { // If login is successful
                 const userData = await authService.getCurrentUser(); // Getting current user data
-                if(userData) dispatch(authLogin(userData)); // Dispatching the authLogin action with user data
+                if(userData) 
+                    dispatch(authLogin(userData)); // Dispatching the authLogin action with user data
+                console.log(userData);
                 navigate("/"); // Redirecting to home page
             }
         } catch (error) { // If login fails

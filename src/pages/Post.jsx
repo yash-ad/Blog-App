@@ -9,16 +9,22 @@ export default function Post() {
   const [post, setPost] = useState(null); // State variable to store the post data
   const { slug } = useParams(); // Extracting the slug parameter from the URL
   const navigate = useNavigate(); // Initializing the useNavigate hook for navigation
-  const userData = useSelector((state) => state.auth.userData); // Fetching user data from Redux store
+  const {userData} = useSelector((state) => state.auth); // Fetching user data from Redux store
 
   // Logging to debug userData structure
   console.log('User Data:', userData);
 
   // Extracting user ID from user data
   let id = userData && userData.$id ? userData.$id : userData?.userData?.$id;
+  // Logging to debug id
+  console.log('Extracted user ID:', id);
 
   // Checking if the logged-in user is the author of the post
   const isAuthor = post && userData ? post.userId === id : false;
+
+    // Logging to debug post.userId and isAuthor
+    console.log('Post User ID:', post?.userId);
+    console.log('isAuthor:', isAuthor);
 
   // Logging to debug slug
   console.log('Extracted slug from URL:', slug);
