@@ -7,7 +7,7 @@ Blogzy is a modern blogging platform built using React.js, Redux, React Router, 
 - **User Authentication**: Users can sign up for an account, log in, and log out securely.
 - **Create and Publish Posts**: Authenticated users can create new blog posts and publish them.
 - **View All Posts**: Users can browse through all published posts on the platform.
-- **Edit Posts**: Authenticated users can edit their own posts.
+- **Edit Posts**: Authenticated users can edit their posts.
 - **View Individual Posts**: Users can view individual posts with detailed information.
 - **Responsive Design**: The application is responsive and works well on various devices.
 
