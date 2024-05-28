@@ -4,8 +4,8 @@ import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Header() {
-  const authStatus = useSelector((state) => state.auth.status);
-  const [navOpen, setNavOpen] = useState(false);
+  const authStatus = useSelector((state) => state.auth.status); //To access and get the authentication status from the redux store.
+  const [navOpen, setNavOpen] = useState(false); //To manage the visibility of the navigation menu for smaller screens its responsive.
 
   const closeNavbar = () => {
     setNavOpen(false);
@@ -85,6 +85,7 @@ function Header() {
                   </li>
                 ) : null
               )}
+              
               {authStatus ? (
                 <li onClick={closeNavbar}>
                   <LogoutBtn />

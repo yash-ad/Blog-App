@@ -1,4 +1,4 @@
-// Define a functional component named Container that takes children as props
+// Define a functional component named Container that takes children as props.
 function Container({ children }) {
   // Return a div element with specified classNames and children
   return (
