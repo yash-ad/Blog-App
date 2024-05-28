@@ -7,10 +7,14 @@ function Header() {
   const authStatus = useSelector((state) => state.auth.status); //To access and get the authentication status from the redux store.
   const [navOpen, setNavOpen] = useState(false); //To manage the visibility of the navigation menu for smaller screens its responsive.
 
+
+  //CloseNavbar is a function is responsible for that sets navOpen to false to close the mobile menu when it comes to smaller screen:-
   const closeNavbar = () => {
     setNavOpen(false);
   };
 
+
+  //An Array of objects 'navItems' defines the navigation links and their visibility based on the users authentication status:-
   const navItems = [
     { name: 'Home', slug: '/', active: authStatus },
     { name: 'Login', slug: '/login', active: !authStatus },
@@ -21,15 +25,20 @@ function Header() {
 
   return (
     <>
+    {/* //The header element contains a Container component for consistent styling. */}
       <header className="py-5 md:py-5 my-0 sticky top-0 z-50 px-0 md:px-10 bg-clip-padding bg-[#00040F]">
         <Container>
+        {/* The nav element inside manages the layout and visibility of navigation links. */}
           <nav className="flex justify-between items-center">
+          {/* Logo */}
             <div>
               <Link to="/" onClick={closeNavbar}>
                 <Logo width="100px" />
               </Link>
             </div>
+            {/* A Button toggles the mobile navigation menu visibility when it comes to the smaller screen */}
             <div className="md:hidden">
+            {/* The button's icon changes based on navOpen state. */}
               <button
                 className="text-white"
                 onClick={() => setNavOpen(!navOpen)}
@@ -72,9 +81,11 @@ function Header() {
                 navOpen ? 'block' : 'hidden'
               } w-full md:w-auto md:flex md:items-center mt-4 md:mt-0`}
             >
+            {/* navItems are mapped as a conditional rendering to the appropiate links based on their active status. */}
               {navItems.map((item) =>
                 item.active ? (
                   <li key={item.name} className="my-2 md:my-0 md:ml-4">
+                  {/* NavLink from react-router-dom is used for navigation with active link styling. */}
                     <NavLink
                       to={item.slug}
                       onClick={closeNavbar}
@@ -86,6 +97,8 @@ function Header() {
                 ) : null
               )}
               
+{/*If there authStatus true that means user is authenticated then show the logout Button or otherwise the user is not authenticated then show the my github logo  */}
+
               {authStatus ? (
                 <li onClick={closeNavbar}>
                   <LogoutBtn />
@@ -115,7 +128,8 @@ function Header() {
                     </svg>
                   </a>
                 </li>
-              )}
+              )
+              }
             </ul>
           </nav>
         </Container>
