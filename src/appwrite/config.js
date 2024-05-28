@@ -20,13 +20,13 @@ export class Service {
     }
 
     // Method to create a new post in the database
-    async createPost({ title, content, featuredImage, status, userId }) {
+    async createPost({ title,slug, content, featuredImage, status, userId }) {
         try {
             // Create a document in the specified database collection
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                userId = ID.unique(), // Generate a unique ID for the post
+                slug,
                 {
                     title,
                     content,
@@ -137,7 +137,8 @@ export class Service {
     }
 
     // Method to get a preview of a file from the storage bucket
-    getFilePreview(fileId) {
+    // filePreview doesn't return a promise. So, we are not making an async function for it. Instead, directly calling it.
+    seeFilePreview(fileId) {
         return this.bucket.getFilePreview(
             conf.appwriteBucketId,
             fileId

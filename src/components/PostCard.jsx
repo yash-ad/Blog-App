@@ -11,7 +11,7 @@ function PostCard({ $id, title, featuredImage }) {
           {/* Rendering the featured image */}
           <div className="w-full mb-4">
             <img
-              src={appwriteService.getFilePreview(featuredImage)} // Getting the preview of the featured image
+              src={appwriteService.seeFilePreview(featuredImage)} // Getting the preview of the featured image
               alt={title} // Setting the alt attribute of the image to the post title
               className="rounded-xl w-full h-auto object-cover" // Applying styling to the image
             />

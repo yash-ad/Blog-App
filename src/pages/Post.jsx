@@ -70,7 +70,7 @@ export default function Post() {
         <Container> {/* Wrapper for post content */}
           <div className="w-full flex justify-center mb-4 relative border rounded-xl overflow-hidden">
             <img
-              src={appwriteService.getFilePreview(post.featuredImage)} // Rendering the featured image of the post
+              src={appwriteService.seeFilePreview(post.featuredImage)} // Rendering the featured image of the post
               alt={post.title} // Setting alt text for the image
               className="max-h-80 w-auto max-w-full h-auto object-contain mx-auto" // Styling for the image
             />
@@ -101,3 +101,4 @@ export default function Post() {
     </div>
   ) : null; // Return null if post data is not available
 }
+
