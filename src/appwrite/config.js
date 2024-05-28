@@ -19,7 +19,7 @@ export class Service {
         this.bucket = new Storage(this.client);
     }
 
-    // Method to create a new post in the database
+    //1.Method to create a new post in the database
     async createPost({ title,slug, content, featuredImage, status, userId }) {
         try {
             // Create a document in the specified database collection
@@ -40,7 +40,7 @@ export class Service {
         }
     }
 
-    // Method to update an existing post in the database
+    //2.Method to update an existing post in the database
     async updatePost(slug, { title, content, featuredImage, status }) {
         try {
             // Update the document with the specified slug
@@ -60,7 +60,7 @@ export class Service {
         }
     }
 
-    // Method to delete a post from the database
+    //3.Method to delete a post from the database.
     async deletePost(slug) {
         try {
             // Delete the document with the specified slug

@@ -1,17 +1,17 @@
-// Import necessary classes from the Appwrite SDK
+// Import necessary classes from the Appwrite SDK (Software Development Kit)
 import { Client, Account, ID } from "appwrite";
 
-// Import configuration from a separate file
+// Import configuration object from a separate file called 'conf':-
 import conf from "../conf/conf.js";
 
 // Log the configuration to the console for debugging purposes
 console.log("Appwrite Configuration:", conf);
 
-// Define and export an AuthService class to handle authentication
+// The AuthService class is defined to handle authentication related tasks:-
 export class AuthService {
   // Initialize the client as an instance variable
   client = new Client();
-  // Declare an account instance variable
+  // An instance variable 'account' is declared but not initialized yet.
   account;
 
   // Constructor to configure the Appwrite client and account instances
@@ -21,14 +21,14 @@ export class AuthService {
       .setEndpoint(conf.appwriteUrl)
       // Set the project ID from the configuration
       .setProject(conf.appwriteProjectId);
-    // Initialize the account instance with the configured client
+    // Here It is  Initialize the 'account' instance with the configured client
     this.account = new Account(this.client);
   }
 
-  // Method to create a new user account
+  //1.This Method is responsible for creating a new user account:-
   async createAccount({ email, password, name }) {
     try {
-      // Generate a unique ID for the new user
+      //It Generates a unique ID for the new user.
       const id = ID.unique();
       // Create the user account with the provided email, password, and name
       const userAccount = await this.account.create(id, email, password, name);
@@ -45,7 +45,7 @@ export class AuthService {
     }
   }
 
-  // Method to log in a user with email and password
+  //2.This Method to log in a user with email and password
   async login({ email, password }) {
     try {
       // Create a session for the user with email and password
@@ -56,7 +56,7 @@ export class AuthService {
     }
   }
 
-  // Method to get the current logged-in user
+  //3.This Method retrieves the details of the currently logged-in user:-
   async getCurrentUser() {
     try {
       // Retrieve the current user's account details
@@ -69,7 +69,7 @@ export class AuthService {
     return null;
   }
 
-  // Method to log out the current user
+  //4.This Method to logs out the current user:-
   async logout() {
     try {
       // Delete all sessions for the current user, effectively logging them out
@@ -81,7 +81,7 @@ export class AuthService {
   }
 }
 
-// Create a singleton instance of AuthService
+// Create a singleton instance of AuthService.
 const authService = new AuthService();
 
 // Export the singleton instance for use in other parts of the application
