@@ -3,7 +3,7 @@ import { Editor } from '@tinymce/tinymce-react'; // Importing the Editor compone
 import { Controller } from 'react-hook-form'; // Importing the Controller component from react-hook-form library
 import conf from '../conf/conf.js';
 
-// Defining the RTE (Rich Text Editor) component
+// Defining the RTE (Realtime Text Editor) component
 function RTE({ name, control, label, defaultValue = '' }) {
   // The RTE component receives props like name, control, label, and defaultValue
 

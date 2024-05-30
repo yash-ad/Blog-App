@@ -17,12 +17,12 @@ function Login() {
         setError(""); // Clearing any previous error
         try {
             const session = await authService.login(data); // Calling the login function from authService with provided data
-            if (session) { // If login is successful
+            if (session) { // If 'session' that means login is successful
                 const userData = await authService.getCurrentUser(); // Getting current user data
                 if(userData) 
-                    dispatch(authLogin(userData)); // Dispatching the authLogin action with user data
+                    dispatch(authLogin(userData)); // Dispatching the authLogin action with current user data,when action is dispatched to updates the redux store.
                 console.log(userData);
-                navigate("/"); // Redirecting to home page
+                navigate("/"); // Redirecting/Navigating to home page
             }
         } catch (error) { // If login fails
             setError(error.message); // Setting the error message

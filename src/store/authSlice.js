@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"; // Importing createSlice function from Redux Toolkit
 
-// Defining the initial state for the authentication slice
+// Defining the initial state for the authentication slice:-
 const initialState = {
     status : false, // Initial authentication status set to false
     userData: null // Initial user data set to null

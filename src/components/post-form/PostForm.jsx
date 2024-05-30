@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'; // Importing useNavigate hook fo
 import { useSelector } from 'react-redux'; // Importing useSelector hook to access Redux store
 
 function PostForm({ post }) {
-  // Destructuring useForm hook for form management
+  // Destructuring useForm hook for form management.
   const { register, handleSubmit, watch, setValue, getValues, control } = useForm({
     defaultValues: {
       title: post?.title || '', // Default value for title from post prop or empty string
@@ -18,12 +18,13 @@ function PostForm({ post }) {
 
   // Hook for navigation
   const navigate = useNavigate();
-  
-  // Get userId from Redux store
+
   const userData = useSelector((state) => state.auth.userData);
+
+  // Get userId from Redux store and it extracts the date from userData object structure:-
   const userId = userData?.$id ?? userData?.userData?.$id;
 
-  // Function to handle form submission
+  // The submit handles form submission its is like an event handler and it handles asynchronous operations.
   const submit = async (data) => {
     try {
       let fileId = post?.featuredImage;
@@ -50,6 +51,7 @@ function PostForm({ post }) {
           navigate(`/post/${dbPost.$id}`, { replace: true });
         }
       } 
+
       // If it's a new post, create it
       else {
         const dbPost = await appwriteService.createPost({
@@ -68,8 +70,9 @@ function PostForm({ post }) {
     }
   };
 
-  // Function to transform title into slug
-  const slugTransform = useCallback((value) => {
+  //  The slugTransform function converts a string into a URL-friendly slug format.
+  const slugTransform = 
+  useCallback((value) => {
     if (value && typeof value === 'string') {
       return value
         .trim()
@@ -80,14 +83,17 @@ function PostForm({ post }) {
     return '';
   }, []);
 
-  // Effect to watch changes in the title and update the slug accordingly
+
+  //An Effect for slug update:-
+  // A useEffect hook watches the changes in the title field and updates the slug field accordingly using the 'slugTransform' function.
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === 'title') {
         setValue('slug', slugTransform(value.title), { shouldValidate: true });
       }
     });
-
+    
+    //For optimization:-
     return () => subscription.unsubscribe();
   }, [watch, slugTransform, setValue]);
 

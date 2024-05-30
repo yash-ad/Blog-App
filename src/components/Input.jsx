@@ -1,14 +1,18 @@
 import { forwardRef, useId } from 'react' // Importing necessary hooks from React
 
-const Input = forwardRef(function Input(
+const Input = 
+forwardRef(
+  function Input(
   { label, type = 'text', className = '', ...props }, // Destructuring props including label, type, className, and other props
-  ref, // Forwarded ref for the input element
+  ref, // A reference to the input element,forwarded by the forwardRef function.
 ) {
   const id = useId() // Generating a unique ID for the input element using the useId hook
   
   return (
     <>
-      <div className="w-full"> 
+     {/* Width full div wrapper */}
+      <div className="w-full">
+      {/* If the label prop is provided  then render a label element. */}
         {label && ( 
           <label className="inline-block mb-1 pl-1" htmlFor={id}> 
             {label}
