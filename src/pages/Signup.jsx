@@ -1,4 +1,4 @@
-import React from "react"; // Importing React for JSX syntax
+
 import { Signup as SignupComponent } from '../components/index.js'; // Importing the Signup component from its respective path
 
 function Signup() {

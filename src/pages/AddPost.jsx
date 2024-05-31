@@ -3,7 +3,8 @@ import { Container, PostForm } from '../components/index'; // Importing the Cont
 function AddPost() {
   return (
     <div className='py-8'> {/* Container for the Add Post page */}
-      <div><h1 className=' text-[2rem] md:text-[2.5rem] text-center font-semibold' >Add Post</h1></div> {/* Title for the Add Post page */}
+      <div>
+      <h1 className=' text-[2rem] md:text-[2.5rem] text-center font-semibold' >Add Post</h1></div> {/* Title for the Add Post page */}
         <Container> {/* Container component to manage layout */}
             <PostForm /> {/* PostForm component for adding a new post */}
         </Container>

@@ -4,6 +4,7 @@ import { Container, PostForm } from '../components/index'; // Importing the Cont
 import appwriteService from '../appwrite/config'; // Importing the appwriteService from its path
 
 function EditPost() {
+
   const [post, setPost] = useState(null); // Initializing state variable 'post' as null using useState hook
   const { slug } = useParams(); // Extracting the 'slug' parameter from the URL using useParams hook
   const navigate = useNavigate(); // Initializing the navigate function to navigate between routes
@@ -12,8 +13,10 @@ function EditPost() {
     const fetchGetPost = async () => { // Defining an asynchronous function 'fetchGetPost'
       try {
         if (slug) { // Checking if 'slug' exists
+          //Fetches the post identified by slug.
           const fetchedPost = await appwriteService.getPost(slug); // Fetching the post using 'getPost' function from appwriteService
           if (fetchedPost) { // Checking if the post is successfully fetched
+            //updates the post state using setPost function
             setPost(fetchedPost); // Updating the 'post' state with the fetched post
           } else {
             console.error('Post not found'); // Logging an error message if the post is not found
@@ -22,7 +25,8 @@ function EditPost() {
         } else {
           navigate('/'); // Redirecting to the homepage if 'slug' does not exist
         }
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('Error fetching post:', error); // Logging any errors that occur during the fetching process
         navigate('/'); // Redirecting to the homepage if there is an error fetching the post
       }
@@ -30,6 +34,7 @@ function EditPost() {
 
     fetchGetPost(); // Calling the 'fetchGetPost' function when the component mounts or 'slug' changes
   }, [slug, navigate]); // Running the effect when 'slug' or 'navigate' changes
+
 
   if (!post) { // Checking if 'post' is null
     return <div>Loading...</div>; // Displaying a loading message if 'post' is null
@@ -41,6 +46,7 @@ function EditPost() {
         <h1 className='text-[2rem] md:text-[2.5rem] text-center font-semibold'>Edit Post</h1> {/* Title for the Edit Post page */}
       </div>
       <Container> {/* Container component to manage layout */}
+      {/* Once the post is fetched, it is passed as a props to the 'postForm' component for editing. */}
         <PostForm post={post} /> {/* Rendering the PostForm component with the fetched post */}
       </Container>
     </div>

@@ -4,24 +4,28 @@ import appwriteService from '../appwrite/config'; // Importing the appwriteServi
 
 function AllPosts() {
   const [posts, setPosts] = useState([]); // Initializing state variable 'posts' as an empty array using useState hook
-
+//posts: State variable to store the fetched posts.
+//setPosts" State function to update the posts state.
   useEffect(() => {
     const fetchPosts = async () => { // Defining an asynchronous function 'fetchPosts' using async keyword
+      //Handles successful fetch
       try {
         const response = await appwriteService.getPosts([]); // Calling the 'getPosts' function from appwriteService to fetch posts
         if (response) {
           console.log('Fetched Posts:', response.documents); // Logging the fetched posts to the console for debugging
-          setPosts(response.documents); // Updating the 'posts' state with the fetched posts
+          setPosts(response.documents); // Updating the 'posts' state with the fetched posts.
         } else {
           console.error('Failed to fetch posts'); // Logging an error message if fetching posts fails
         }
-      } catch (error) {
+      } 
+      //Handles errors
+      catch (error) {
         console.error('Error fetching posts:', error); // Logging any errors that occur during the fetching process
       }
     };
 
     fetchPosts(); // Calling the 'fetchPosts' function when the component mounts
-  }, []); // Running the effect only once when the component mounts, indicated by an empty dependency array
+  }, []); //An empty dependency array that means it will runs only once when the component mounts
 
   return (
     <div className="w-full py-8"> {/* Container for the All Posts page */}
@@ -31,6 +35,7 @@ function AllPosts() {
         </h1>
       </div>
       <Container> 
+      {/* Conditional render checking if the posts length is greater than zero that means posts are not zero. */}
         {posts.length > 0 ? ( 
           <div className="columns-1 md:columns-1 lg:columns-2 xl:columns-3 gap-4 p-4"> 
             {posts.map((post) => ( 

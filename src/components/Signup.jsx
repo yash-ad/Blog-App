@@ -12,7 +12,8 @@ function Signup() {
   const [error, setError] = useState(""); // Initializing error state to handle errors
   const { register, handleSubmit } = useForm(); // Initializing useForm hook for form handling
 
-  // Function to handle form submission and create account
+  // Function to handle form submission and create account:-
+  // 'create' function is an async function with 'data' as a paramater.
   const create = async (data) => {
     setError(""); // Clearing any previous errors
     try {
@@ -28,7 +29,8 @@ function Signup() {
           navigate("/");
         }
       }
-    } catch (error) {
+    } 
+    catch (error) {
       // Catching and handling any errors that occur during account creation
       setError(`${error.message}`);
     }

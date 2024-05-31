@@ -10,7 +10,7 @@ function RTE({ name, control, label, defaultValue = '' }) {
   return (
     <>
       <div className="w-full">
-        {/* Rendering the label if provided */}
+        {/* If the label is provided  from the prop then render the label*/}
         {label && <label className="inline-block mb-1 pl-1">{label}</label>}
 
         {/* Using the Controller component from react-hook-form to connect the RTE component with the form */}

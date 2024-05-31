@@ -25,10 +25,12 @@ function Home() {
             </h1>
             <div className="mx-auto"> 
               <Button 
-                onClick={() => navigateHome()}
+              // Setting the click handler 'navigateHome' to navigate based on authentication status.
+                onClick={navigateHome} 
                 className="my-7 md:py-2 py-0 px-5 text-white font-weight-400 bg-customPink rounded-xl shadow-lg duration-200 hover:cursor-pointer hover:bg-white hover:text-black hover:scale-105 md:mx-2 md:my-6" 
               >
-                {status ? 'See Posts' : 'Get Started'} 
+              {/* changes text conditionaly render based on authentication status */}
+                {status ? 'See Posts' : 'Get Started'}  
               </Button>
             </div>
           </div>

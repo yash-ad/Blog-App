@@ -29,21 +29,28 @@ export default function Post() {
   // Logging to debug slug
   console.log('Extracted slug from URL:', slug);
 
+
+  // Fetch Post Data when the component mounts:-
   useEffect(() => {
+    //fetchPost is an asynchronous function to fetch the post data
     const fetchPost = async () => {
-      if (slug) { // Checking if slug exists
+      if (slug) { // Checking if there is a slug exists
         try {
+          //Fetching post from appwriteService and calling getPost() method or a function.
           const post = await appwriteService.getPost(slug); // Fetching post data using the slug
+          // if the post is fetched and it exists then update the state using setPost function
           if (post) {
             setPost(post); // Setting the retrieved post data to state
           } else {
             navigate('/'); // Navigating to the home page if post data is not found
           }
-        } catch (error) {
+        }
+         catch (error) {
           console.error('Error fetching post:', error); // Logging error if fetching post data fails
           navigate('/'); // Navigating to the home page in case of error
         }
-      } else {
+      } 
+      else {
         navigate('/'); // Navigating to the home page if slug is not available
       }
     };
@@ -51,7 +58,9 @@ export default function Post() {
     fetchPost(); // Calling the fetchPost function when the component mounts or when the slug changes
   }, [slug, navigate]); // Dependency array for the useEffect hook
 
-  // Function to delete a post
+
+
+// The 'deletePost' function is asynchronous and always returns a promise. That's why we use try-catch to handle errors gracefully..
   const deletePost = async () => {
     try {
       const status = await appwriteService.deletePost(post.$id); // Deleting the post from the database
@@ -59,15 +68,19 @@ export default function Post() {
         await appwriteService.deleteFile(post.featuredImage); // Deleting the associated featured image file
         navigate('/'); // Navigating to the home page after successful deletion
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error deleting post:', error); // Logging error if post deletion fails
     }
   };
 
+
+  //Conditionally renders if there is post content exists the show the post content with edit and delete button for updations.
   return post ? ( // Conditional rendering of post content
     <div className="py-8 flex justify-center"> {/* Container for the post */}
       <div className="max-w-[57rem]"> {/* Container for limiting post width */}
-        <Container> {/* Wrapper for post content */}
+        {/* Wrapper for post content */}
+        <Container> 
           <div className="w-full flex justify-center mb-4 relative border rounded-xl overflow-hidden">
             <img
               src={appwriteService.seeFilePreview(post.featuredImage)} // Rendering the featured image of the post
@@ -75,7 +88,7 @@ export default function Post() {
               className="max-h-80 w-auto max-w-full h-auto object-contain mx-auto" // Styling for the image
             />
 
-            {/* Button group for edit and delete actions, displayed only if the logged-in user is the author of the post */}
+            {/* Button group for edit and delete actions.*/}
             {isAuthor && (
               <div className="absolute right-6 top-6 space-x-2">
                 <Link to={`/edit-post/${post.$id}`}> {/* Link to the edit post page */}
@@ -88,17 +101,20 @@ export default function Post() {
             )}
           </div>
 
+{/* Title of the post */}
           <div className="w-full mb-6">
-            <h1 className="text-2xl font-bold">{post.title}</h1> {/* Title of the post */}
+            <h1 className="text-2xl font-bold">{post.title}</h1> 
           </div>
 
           {/* Parsing and rendering the HTML content of the post */}
           <div className="browser-css text-left leading-relaxed">
             {parse(String(post.content))}
           </div>
+          
         </Container>
       </div>
     </div>
-  ) : null; // Return null if post data is not available
+  ) 
+  :  null; // Return null if post data is not available
 }
 
