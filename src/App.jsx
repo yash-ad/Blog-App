@@ -6,40 +6,54 @@ import { Outlet } from "react-router-dom"; // Importing Outlet component from re
 import authService from "./appwrite/auth.js"; // Importing authService for authentication logic
 
 function App() {
-  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [loading, setLoading] = useState(true); // Loading state is initialized to true to manage the loading state while fetching user data .
   const dispatch = useDispatch(); // useDispatch hook to dispatch actions to Redux store
 
   useEffect(() => {
+    //An asynchronous function 'fetchCurrentUser' is defined to fetch the current user data.
     const fetchCurrentUser = async () => {
       try {
+        //getCurrentUser() method or function is called to fetch user data.
         const userData = await authService.getCurrentUser(); // Fetching current user data from authService
+        
+        //if the userData exists then dispatches an action calls to the reducer function which is login overhere.
         if (userData) {
-          dispatch(login({ userData })); // Dispatching login action with user data if user is authenticated
+          // Dispatching login action with user data if user is authenticated.
+          // The 'login' action updates the redux store Autentication state with the userData.
+          dispatch(login({ userData }));
         } else {
-          dispatch(logout()); // Dispatching logout action if no user data is available
+          // Dispatching logout action if no user data is available
+          dispatch(logout()); 
         }
       } catch (error) {
-        console.error("Error fetching current user:", error); // Logging error if fetching current user fails
-        dispatch(logout()); // Dispatching logout action on error
+        // Logging error if fetching current user fails
+        console.error("Error fetching current user:", error); 
+        // Dispatching logout action on error
+        dispatch(logout()); 
       } finally {
-        setLoading(false); // Setting loading state to false after fetching current user data
+        // Setting loading state to false after fetching current user data
+        setLoading(false); 
       }
     };
+// Call fetchCurrentUser function when component mounts ,here component mounts means that In react component mounting is the process of adding a component to the DOM, this happens when component is created , when its updated and needs to be re-rendered.
+    fetchCurrentUser(); 
+    // Adding dispatch to dependency array to avoid lint warnings and ensure the effect only runs when there is a change in 'dispatch'.
+  }, [dispatch]); 
 
-    fetchCurrentUser(); // Call fetchCurrentUser function when component mounts
-  }, [dispatch]); // Adding dispatch to dependency array to avoid lint warnings
 
+  // Conditional Rendering
   if (loading) {
     return null; // Show nothing or a loader while loading
   }
 
   return (
     <>
-      <Header /> {/* Rendering Header component */}
+    
+      <Header /> {/* Rendering Header component TOP*/}
       <main className="min-h-screen py-6">
-        <Outlet /> {/* Rendering Outlet component to render nested routes */}
+        <Outlet /> {/* Rendering Outlet component to render nested  child routes */}
       </main>
-      <Footer /> {/* Rendering Footer component */}
+      <Footer /> {/* Rendering Footer component BOTTOM*/}
     </>
   );
 }
