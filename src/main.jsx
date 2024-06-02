@@ -5,19 +5,25 @@ import './index.css'; // Importing global CSS styles
 import { Provider } from 'react-redux'; // Importing Provider component from react-redux for Redux store integration
 import store from './store/store.js'; // Importing Redux store
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'; // Importing RouterProvider and createBrowserRouter from react-router-dom
-import Home from './pages/Home.jsx'; // Importing Home component
-import { AuthLayout, Login } from './components/index.js'; // Importing AuthLayout and Login components
-import AllPosts from './pages/AllPosts.jsx'; // Importing AllPosts component
-import AddPost from './pages/AddPost.jsx'; // Importing AddPost component
-import EditPost from './pages/EditPost.jsx'; // Importing EditPost component
-import Post from './pages/Post.jsx'; // Importing Post component
-import Signup from './pages/Signup.jsx'; // Importing Signup component
+import { AuthLayout } from './components/index.js'; // Importing AuthLayout and Login components
+import { lazy } from 'react';
+
+
+//Lazy load to route the components:-
+const Home = lazy(()=> import('./pages/Home.jsx'));
+const Login = lazy(()=> import('./pages/Login.jsx'));
+const Signup = lazy(()=> import('./pages/Signup.jsx'));
+const AllPosts = lazy(() => import('./pages/AllPosts.jsx'));
+const AddPost = lazy(() => import('./pages/AddPost.jsx'));
+const EditPost = lazy(() => import('./pages/EditPost.jsx'));
+const Post = lazy(() => import('./pages/Post.jsx'));
 
 // Creating the router configuration
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />, // Root element is the App component
+    // Child routes are defined within the children array and it directly links and render to the <Outlet/>:-
     children: [
       {
         path: '/',

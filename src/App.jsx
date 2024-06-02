@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"; // Importing useEffect and useState hooks from React
+import { useEffect, useState,Suspense ,lazy} from "react"; // Importing useEffect and useState hooks from React
 import { useDispatch } from "react-redux"; // Importing useDispatch hook from React Redux
 import { login, logout } from "./store/authSlice"; // Importing login and logout actions from the authSlice
 import { Footer, Header } from "./components"; // Importing Footer and Header components
 import { Outlet } from "react-router-dom"; // Importing Outlet component from react-router-dom
 import authService from "./appwrite/auth.js"; // Importing authService for authentication logic
+
+
 
 function App() {
   const [loading, setLoading] = useState(true); // Loading state is initialized to true to manage the loading state while fetching user data .
@@ -51,7 +53,9 @@ function App() {
     
       <Header /> {/* Rendering Header component TOP*/}
       <main className="min-h-screen py-6">
+      <Suspense fallback={<div>Loading...</div>}>
         <Outlet /> {/* Rendering Outlet component to render nested  child routes */}
+        </Suspense>
       </main>
       <Footer /> {/* Rendering Footer component BOTTOM*/}
     </>
