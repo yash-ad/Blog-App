@@ -32,11 +32,11 @@ export class Service {
                     content,
                     featuredImage,
                     status,
-                    userId,
+                    userId
                 }
             );
         } catch (error) {
-            console.log("Appwrite service :: createPost :: error", error);
+            throw("Appwrite service :: createPost :: error", error);
         }
     }
 
@@ -56,7 +56,7 @@ export class Service {
                 }
             );
         } catch (error) {
-            console.log("Appwrite service :: updatePost :: error", error);
+            console.error("Appwrite service :: updatePost :: error", error);
         }
     }
 

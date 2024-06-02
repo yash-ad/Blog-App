@@ -20,14 +20,26 @@ function PostForm({ post }) {
   const navigate = useNavigate();
 
   const userData = useSelector((state) => state.auth.userData);
+  console.log('userData :',userData);
 
   // Get userId from Redux store and it extracts the date from userData object structure:-
   const userId = userData?.$id ?? userData?.userData?.$id;
+  console.log('userId :',userId);
 
   // The submit handles form submission its is like an event handler and it handles asynchronous operations.
   const submit = async (data) => {
     try {
-      let fileId = post?.featuredImage;
+
+      //Ensure content is a string and check its length:-
+      data.content =  String(data.content);
+
+      if (data.content.length > 255) {
+        alert('Content must be no longer than 255 characters.');
+        return;
+      }
+
+      
+     let fileId = post?.featuredImage;
 
       // Check if there's an image file attached
       if (data.image?.length > 0) {
